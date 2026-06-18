@@ -98,7 +98,7 @@ function PedidosPage() {
         ))}
       </div>
 
-      {detail && <OrderDetail order={detail} onClose={() => setDetail(null)} onUpdate={(s) => updateStatus.mutate({ id: detail.id, status: s })} />}
+      {detail && <OrderDetail order={detail} onClose={() => setDetail(null)} onUpdate={(s: string) => updateStatus.mutate({ id: detail.id, status: s })} />}
     </div>
   );
 }
