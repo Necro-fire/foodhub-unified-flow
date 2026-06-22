@@ -223,6 +223,7 @@ export type Database = {
       }
       orders: {
         Row: {
+          bairro: string | null
           cliente_endereco: string | null
           cliente_nome: string | null
           cliente_telefone: string | null
@@ -231,6 +232,7 @@ export type Database = {
           desconto: number
           finalizado_em: string | null
           forma_pagamento: Database["public"]["Enums"]["payment_method"]
+          horario_retirada: string | null
           id: string
           mesa_id: string | null
           numero: number
@@ -245,6 +247,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          bairro?: string | null
           cliente_endereco?: string | null
           cliente_nome?: string | null
           cliente_telefone?: string | null
@@ -253,6 +256,7 @@ export type Database = {
           desconto?: number
           finalizado_em?: string | null
           forma_pagamento?: Database["public"]["Enums"]["payment_method"]
+          horario_retirada?: string | null
           id?: string
           mesa_id?: string | null
           numero?: number
@@ -267,6 +271,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          bairro?: string | null
           cliente_endereco?: string | null
           cliente_nome?: string | null
           cliente_telefone?: string | null
@@ -275,6 +280,7 @@ export type Database = {
           desconto?: number
           finalizado_em?: string | null
           forma_pagamento?: Database["public"]["Enums"]["payment_method"]
+          horario_retirada?: string | null
           id?: string
           mesa_id?: string | null
           numero?: number
@@ -505,6 +511,7 @@ export type Database = {
         | "saiu_entrega"
         | "finalizado"
         | "cancelado"
+        | "entregue"
       order_type: "retirada" | "local" | "entrega"
       payment_method:
         | "pix"
@@ -654,6 +661,7 @@ export const Constants = {
         "saiu_entrega",
         "finalizado",
         "cancelado",
+        "entregue",
       ],
       order_type: ["retirada", "local", "entrega"],
       payment_method: [
