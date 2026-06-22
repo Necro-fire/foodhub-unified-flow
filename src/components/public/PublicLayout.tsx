@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { ShoppingBag, Pizza } from "lucide-react";
+import { ShoppingBag, Croissant } from "lucide-react";
 import { useCart } from "@/lib/cart";
 import { Badge } from "@/components/ui/badge";
 
@@ -11,9 +11,9 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
           <Link to="/" className="flex items-center gap-2">
             <div className="grid h-9 w-9 place-items-center rounded-lg bg-gradient-primary text-primary-foreground">
-              <Pizza className="h-5 w-5" />
+              <Croissant className="h-5 w-5" />
             </div>
-            <span className="font-display text-xl font-bold tracking-tight">Sabore</span>
+            <span className="font-display text-xl font-bold tracking-tight">Padaria</span>
           </Link>
           <nav className="flex items-center gap-2">
             <Link
@@ -32,14 +32,14 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
               to="/auth"
               className="hidden text-xs text-muted-foreground hover:text-foreground md:inline-flex"
             >
-              Acesso restaurante
+              Acesso padaria
             </Link>
           </nav>
         </div>
       </header>
       <main>{children}</main>
       <footer className="mt-16 border-t border-border py-8 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} Sabore — Sistema de gestão & pedidos
+        © {new Date().getFullYear()} Padaria — Sistema de gestão & pedidos
       </footer>
     </div>
   );
