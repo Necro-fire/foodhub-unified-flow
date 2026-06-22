@@ -11,22 +11,24 @@ export const fmtTime = (d: string | Date) =>
   new Intl.DateTimeFormat("pt-BR", { timeStyle: "short" }).format(new Date(d));
 
 export const statusLabel: Record<string, string> = {
-  novo: "Novo",
+  novo: "Novo Pedido",
   confirmado: "Confirmado",
-  em_preparo: "Em preparo",
+  em_preparo: "Em Preparo",
   pronto: "Pronto",
   saiu_entrega: "Saiu p/ entrega",
+  entregue: "Pedido Entregue",
   finalizado: "Finalizado",
   cancelado: "Cancelado",
 };
 
 export const statusColor: Record<string, string> = {
-  novo: "bg-accent text-accent-foreground",
+  novo: "bg-chart-4/20 text-chart-4 border border-chart-4/40",
   confirmado: "bg-chart-4/20 text-chart-4",
   em_preparo: "bg-warning text-warning-foreground",
-  pronto: "bg-success text-success-foreground",
+  pronto: "bg-accent text-accent-foreground",
   saiu_entrega: "bg-chart-4 text-white",
-  finalizado: "bg-muted text-muted-foreground",
+  entregue: "bg-success text-success-foreground",
+  finalizado: "bg-success text-success-foreground",
   cancelado: "bg-destructive/20 text-destructive",
 };
 
@@ -42,8 +44,21 @@ export const paymentLabel: Record<string, string> = {
 
 export const tipoLabel: Record<string, string> = {
   retirada: "Retirada",
-  local: "Consumo no local",
+  local: "Mesa",
   entrega: "Entrega",
+};
+
+/** Cor por categoria de pedido (Mesa azul, Entrega verde, Retirada laranja) */
+export const tipoColor: Record<string, string> = {
+  local: "bg-chart-4/15 text-chart-4 border-chart-4/40",
+  entrega: "bg-success/15 text-success border-success/40",
+  retirada: "bg-warning/20 text-warning-foreground border-warning/40",
+};
+
+export const tipoDot: Record<string, string> = {
+  local: "bg-chart-4",
+  entrega: "bg-success",
+  retirada: "bg-warning",
 };
 
 export const origemLabel: Record<string, string> = {
