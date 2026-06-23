@@ -101,6 +101,7 @@ function VendasPage() {
                 <th className="px-3 py-2">Nº</th>
                 <th className="px-3 py-2">Data</th>
                 <th className="px-3 py-2">Cliente</th>
+                <th className="px-3 py-2">Categoria</th>
                 <th className="px-3 py-2">Origem</th>
                 <th className="px-3 py-2">Pgto</th>
                 <th className="px-3 py-2">Status</th>
@@ -113,6 +114,7 @@ function VendasPage() {
                   <td className="px-3 py-2 font-mono font-semibold">#{o.numero}</td>
                   <td className="px-3 py-2 text-muted-foreground">{fmtDate(o.created_at)}</td>
                   <td className="px-3 py-2">{o.cliente_nome ?? "—"}</td>
+                  <td className="px-3 py-2"><Badge className={tipoColor[o.tipo]}>{tipoLabel[o.tipo]}</Badge></td>
                   <td className="px-3 py-2">{origemLabel[o.origem]}</td>
                   <td className="px-3 py-2">{paymentLabel[o.forma_pagamento]}</td>
                   <td className="px-3 py-2"><Badge className={statusColor[o.status]}>{statusLabel[o.status]}</Badge></td>
@@ -120,7 +122,7 @@ function VendasPage() {
                 </tr>
               ))}
               {filtered.length === 0 && (
-                <tr><td colSpan={7} className="py-8 text-center text-muted-foreground">Nenhuma venda encontrada</td></tr>
+                <tr><td colSpan={8} className="py-8 text-center text-muted-foreground">Nenhuma venda encontrada</td></tr>
               )}
             </tbody>
           </table>
