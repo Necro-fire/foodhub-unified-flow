@@ -16,17 +16,25 @@ function VendasPage() {
   const [status, setStatus] = useState<string>("todos");
   const [origem, setOrigem] = useState<string>("todos");
   const [pgto, setPgto] = useState<string>("todos");
+  const [tipo, setTipo] = useState<string>("todos");
+  const [data, setData] = useState<string>("");
   const [busca, setBusca] = useState("");
 
   const list = useQuery({
-    queryKey: ["vendas", status, origem, pgto],
+    queryKey: ["vendas", status, origem, pgto, tipo, data],
     queryFn: async () => {
       let q = supabase.from("orders").select("*").order("created_at", { ascending: false }).limit(500);
       if (status !== "todos") q = q.eq("status", status as any);
       if (origem !== "todos") q = q.eq("origem", origem as any);
       if (pgto !== "todos") q = q.eq("forma_pagamento", pgto as any);
-      const { data } = await q;
-      return data ?? [];
+      if (tipo !== "todos") q = q.eq("tipo", tipo as any);
+      if (data) {
+        const start = `${data}T00:00:00.000Z`;
+        const end = `${data}T23:59:59.999Z`;
+        q = q.gte("created_at", start).lte("created_at", end);
+      }
+      const { data: rows } = await q;
+      return rows ?? [];
     },
   });
 
@@ -38,6 +46,7 @@ function VendasPage() {
 
   const total = filtered.reduce((s, o) => s + Number(o.total), 0);
 
+
   return (
     <div className="space-y-4">
       <div className="flex items-end justify-between">
@@ -48,8 +57,18 @@ function VendasPage() {
       </div>
 
       <Card className="p-4">
-        <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-4">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-6">
           <Input placeholder="Buscar nº/cliente/tel" value={busca} onChange={(e) => setBusca(e.target.value)} />
+          <Input type="date" value={data} onChange={(e) => setData(e.target.value)} />
+          <Select value={tipo} onValueChange={setTipo}>
+            <SelectTrigger><SelectValue placeholder="Categoria" /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="todos">Todas categorias</SelectItem>
+              <SelectItem value="local">Mesa</SelectItem>
+              <SelectItem value="entrega">Entrega</SelectItem>
+              <SelectItem value="retirada">Retirada</SelectItem>
+            </SelectContent>
+          </Select>
           <Select value={status} onValueChange={setStatus}>
             <SelectTrigger><SelectValue placeholder="Status" /></SelectTrigger>
             <SelectContent>
