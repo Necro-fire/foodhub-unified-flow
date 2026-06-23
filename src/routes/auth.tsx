@@ -65,10 +65,10 @@ function AuthPage() {
       <div className="w-full max-w-md rounded-2xl bg-card p-8 shadow-elevated">
         <div className="mb-6 flex items-center gap-3">
           <div className="grid h-10 w-10 place-items-center rounded-lg bg-gradient-primary text-primary-foreground">
-            <Pizza className="h-5 w-5" />
+            <Croissant className="h-5 w-5" />
           </div>
           <div>
-            <div className="font-display text-xl font-bold">Sabore Admin</div>
+            <div className="font-display text-xl font-bold">Padaria Admin</div>
             <div className="text-xs text-muted-foreground">Acesso restrito da equipe</div>
           </div>
         </div>
