@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { fmtMoney, fmtDate, statusLabel, statusColor, paymentLabel, origemLabel } from "@/lib/format";
+import { fmtMoney, fmtDate, statusLabel, statusColor, paymentLabel, origemLabel, tipoLabel, tipoColor } from "@/lib/format";
 
 export const Route = createFileRoute("/_authenticated/admin/vendas")({
   component: VendasPage,
