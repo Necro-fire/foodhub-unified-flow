@@ -57,60 +57,61 @@
 :root {
   --radius: 0.75rem;
 
-  /* Paleta quente — pizzaria artesanal */
-  --background: oklch(0.985 0.012 80);          /* creme */
-  --foreground: oklch(0.20 0.025 35);           /* carvão quente */
+  /* Paleta padaria — marrom, bege, creme, dourado, branco */
+  --background: oklch(0.985 0.015 80);          /* creme suave */
+  --foreground: oklch(0.22 0.030 50);           /* marrom escuro */
 
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.20 0.025 35);
+  --card: oklch(0.995 0.008 85);
+  --card-foreground: oklch(0.22 0.030 50);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.20 0.025 35);
+  --popover-foreground: oklch(0.22 0.030 50);
 
-  --primary: oklch(0.58 0.18 40);               /* terracota / tomate */
-  --primary-foreground: oklch(0.99 0.01 80);
-  --primary-glow: oklch(0.68 0.20 45);
+  --primary: oklch(0.42 0.075 55);              /* marrom café */
+  --primary-foreground: oklch(0.985 0.015 80);
+  --primary-glow: oklch(0.55 0.10 60);
 
-  --secondary: oklch(0.95 0.02 80);
-  --secondary-foreground: oklch(0.25 0.03 35);
+  --secondary: oklch(0.94 0.025 75);            /* bege claro */
+  --secondary-foreground: oklch(0.28 0.04 50);
 
-  --muted: oklch(0.95 0.015 80);
-  --muted-foreground: oklch(0.50 0.02 40);
+  --muted: oklch(0.95 0.018 75);
+  --muted-foreground: oklch(0.48 0.025 50);
 
-  --accent: oklch(0.78 0.16 75);                /* âmbar */
-  --accent-foreground: oklch(0.20 0.03 35);
+  --accent: oklch(0.78 0.13 75);                /* dourado */
+  --accent-foreground: oklch(0.22 0.04 50);
 
-  --success: oklch(0.62 0.16 145);              /* oliva/verde */
+  --success: oklch(0.62 0.15 145);              /* verde — entrega */
   --success-foreground: oklch(0.99 0.01 80);
 
-  --warning: oklch(0.75 0.17 75);
-  --warning-foreground: oklch(0.20 0.03 35);
+  --warning: oklch(0.72 0.16 55);               /* laranja — retirada */
+  --warning-foreground: oklch(0.22 0.04 50);
 
   --destructive: oklch(0.55 0.22 27);
   --destructive-foreground: oklch(0.99 0.01 80);
 
-  --border: oklch(0.90 0.015 70);
-  --input: oklch(0.92 0.012 70);
-  --ring: oklch(0.58 0.18 40);
+  --border: oklch(0.90 0.020 70);
+  --input: oklch(0.93 0.015 70);
+  --ring: oklch(0.42 0.075 55);
 
-  --chart-1: oklch(0.58 0.18 40);
-  --chart-2: oklch(0.78 0.16 75);
-  --chart-3: oklch(0.62 0.16 145);
-  --chart-4: oklch(0.55 0.10 250);
-  --chart-5: oklch(0.45 0.15 320);
+  --chart-1: oklch(0.42 0.075 55);              /* marrom */
+  --chart-2: oklch(0.78 0.13 75);               /* dourado */
+  --chart-3: oklch(0.62 0.15 145);              /* verde */
+  --chart-4: oklch(0.55 0.13 240);              /* azul — mesa */
+  --chart-5: oklch(0.65 0.16 30);               /* terracota */
 
-  --sidebar: oklch(0.22 0.025 35);
-  --sidebar-foreground: oklch(0.95 0.01 80);
-  --sidebar-primary: oklch(0.68 0.20 45);
-  --sidebar-primary-foreground: oklch(0.99 0.01 80);
-  --sidebar-accent: oklch(0.28 0.03 35);
-  --sidebar-accent-foreground: oklch(0.95 0.01 80);
-  --sidebar-border: oklch(0.32 0.02 35);
-  --sidebar-ring: oklch(0.68 0.20 45);
+  --sidebar: oklch(0.24 0.035 50);              /* marrom escuro */
+  --sidebar-foreground: oklch(0.96 0.015 80);
+  --sidebar-primary: oklch(0.78 0.13 75);       /* dourado */
+  --sidebar-primary-foreground: oklch(0.22 0.04 50);
+  --sidebar-accent: oklch(0.30 0.035 50);
+  --sidebar-accent-foreground: oklch(0.96 0.015 80);
+  --sidebar-border: oklch(0.34 0.025 50);
+  --sidebar-ring: oklch(0.78 0.13 75);
 
   --gradient-primary: linear-gradient(135deg, var(--primary), var(--primary-glow));
-  --gradient-warm: linear-gradient(135deg, oklch(0.58 0.18 40), oklch(0.75 0.17 75));
+  --gradient-warm: linear-gradient(135deg, oklch(0.42 0.075 55), oklch(0.78 0.13 75));
   --shadow-soft: 0 2px 8px -2px color-mix(in oklab, var(--foreground) 12%, transparent);
   --shadow-elevated: 0 12px 32px -12px color-mix(in oklab, var(--primary) 35%, transparent);
+
 }
 
 @layer base {

@@ -3,7 +3,7 @@ import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel,
   SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarHeader, SidebarFooter, useSidebar,
 } from "@/components/ui/sidebar";
-import { LayoutDashboard, ShoppingCart, Package, ClipboardList, Calculator, Coffee, Wallet, Settings, LogOut, Pizza } from "lucide-react";
+import { LayoutDashboard, ShoppingCart, Package, ClipboardList, Calculator, Coffee, Wallet, Settings, LogOut, Croissant } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
 
@@ -40,9 +40,9 @@ export function AdminSidebar() {
       <SidebarHeader>
         <div className="flex items-center gap-2 px-2 py-2">
           <div className="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-gradient-primary text-primary-foreground">
-            <Pizza className="h-4 w-4" />
+            <Croissant className="h-4 w-4" />
           </div>
-          {!collapsed && <span className="font-display text-base font-bold text-sidebar-foreground">Sabore</span>}
+          {!collapsed && <span className="font-display text-base font-bold text-sidebar-foreground">Padaria</span>}
         </div>
       </SidebarHeader>
       <SidebarContent>

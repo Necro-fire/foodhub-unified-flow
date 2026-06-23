@@ -63,8 +63,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Sabore — Gestão & Pedidos Online" },
-      { name: "description", content: "Faça seu pedido online ou gerencie sua pizzaria de ponta a ponta." },
+      { title: "Padaria — Pedidos Online & Gestão" },
+      { name: "description", content: "Peça pães, bolos, salgados e cafés online. Gestão completa para sua padaria." },
     ],
     links: [{ rel: "stylesheet", href: appCss }],
   }),

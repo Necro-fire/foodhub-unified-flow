@@ -9,7 +9,7 @@ import { CheckCircle2 } from "lucide-react";
 import { fmtMoney, statusLabel, statusColor, tipoLabel, paymentLabel } from "@/lib/format";
 
 export const Route = createFileRoute("/pedido/$numero")({
-  head: ({ params }) => ({ meta: [{ title: `Pedido #${params.numero} — Sabore` }] }),
+  head: ({ params }) => ({ meta: [{ title: `Pedido #${params.numero} — Padaria` }] }),
   component: OrderPage,
 });
 
