@@ -49,6 +49,7 @@ function CheckoutPage() {
     if (items.length === 0) return toast.error("Carrinho vazio");
     if (!nome.trim() || !telefone.trim()) return toast.error("Preencha nome e telefone");
     if (tipo === "entrega" && !endereco.trim()) return toast.error("Endereço obrigatório para entrega");
+    if (tipo === "entrega" && !bairro.trim()) return toast.error("Bairro obrigatório para entrega");
 
     setLoading(true);
     const { data: order, error } = await supabase
