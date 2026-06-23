@@ -15,10 +15,10 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Cardápio — Sabore Pizzaria" },
-      { name: "description", content: "Peça online suas pizzas artesanais, bebidas e sobremesas. Entrega rápida e fácil." },
-      { property: "og:title", content: "Sabore Pizzaria — Cardápio" },
-      { property: "og:description", content: "Pizzas artesanais, bebidas e sobremesas. Peça online!" },
+      { title: "Cardápio — Padaria Pão Dourado" },
+      { name: "description", content: "Peça online pães, bolos, salgados, cafés e doces fresquinhos. Entrega e retirada rápida." },
+      { property: "og:title", content: "Padaria Pão Dourado — Cardápio" },
+      { property: "og:description", content: "Pães artesanais, bolos, doces e cafés fresquinhos todos os dias." },
     ],
   }),
   component: HomePage,
@@ -86,12 +86,12 @@ function HomePage() {
     <PublicLayout>
       <section className="bg-gradient-warm text-primary-foreground">
         <div className="mx-auto max-w-6xl px-4 py-12 md:py-20">
-          <Badge className="mb-4 bg-white/20 text-white hover:bg-white/30">Pizzaria artesanal</Badge>
+          <Badge className="mb-4 bg-white/20 text-white hover:bg-white/30">Padaria artesanal</Badge>
           <h1 className="font-display text-4xl font-bold md:text-6xl">
-            {settings.data?.nome_estabelecimento ?? "Sabore Pizzaria"}
+            {settings.data?.nome_estabelecimento ?? "Padaria Pão Dourado"}
           </h1>
           <p className="mt-3 max-w-xl text-base text-white/90 md:text-lg">
-            {settings.data?.descricao ?? "Massa de fermentação natural, ingredientes frescos."}
+            {settings.data?.descricao ?? "Pães artesanais, bolos, doces e cafés todos os dias."}
           </p>
           <div className="mt-6 flex flex-wrap gap-4 text-sm text-white/90">
             <span className="inline-flex items-center gap-2"><Clock className="h-4 w-4" />{settings.data?.horario_funcionamento}</span>

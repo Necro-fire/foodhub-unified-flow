@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Pizza } from "lucide-react";
+import { Croissant } from "lucide-react";
 
 export const Route = createFileRoute("/auth")({
   ssr: false,
@@ -14,7 +14,7 @@ export const Route = createFileRoute("/auth")({
     const { data } = await supabase.auth.getUser();
     if (data.user) throw redirect({ to: "/admin" });
   },
-  head: () => ({ meta: [{ title: "Acesso restaurante — Sabore" }] }),
+  head: () => ({ meta: [{ title: "Acesso padaria — Admin" }] }),
   component: AuthPage,
 });
 
