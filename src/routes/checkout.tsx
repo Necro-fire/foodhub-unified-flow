@@ -13,11 +13,11 @@ import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/checkout")({
-  head: () => ({ meta: [{ title: "Finalizar pedido — Sabore" }] }),
+  head: () => ({ meta: [{ title: "Finalizar pedido — Padaria" }] }),
   component: CheckoutPage,
 });
 
-type Tipo = "retirada" | "local" | "entrega";
+type Tipo = "retirada" | "entrega";
 type Pagto = "pix" | "dinheiro" | "credito" | "debito";
 
 function CheckoutPage() {
@@ -28,6 +28,8 @@ function CheckoutPage() {
   const [nome, setNome] = useState("");
   const [telefone, setTelefone] = useState("");
   const [endereco, setEndereco] = useState("");
+  const [bairro, setBairro] = useState("");
+  const [horarioRetirada, setHorarioRetirada] = useState("");
   const [obs, setObs] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -55,6 +57,8 @@ function CheckoutPage() {
         cliente_nome: nome,
         cliente_telefone: telefone,
         cliente_endereco: tipo === "entrega" ? endereco : null,
+        bairro: tipo === "entrega" ? bairro || null : null,
+        horario_retirada: tipo === "retirada" && horarioRetirada ? new Date(horarioRetirada).toISOString() : null,
         origem: "online",
         tipo,
         status: "novo",
@@ -110,11 +114,11 @@ function CheckoutPage() {
         <form onSubmit={submit} className="space-y-6">
           <section className="rounded-xl border border-border bg-card p-5">
             <h2 className="mb-3 font-semibold">Como você quer receber?</h2>
-            <RadioGroup value={tipo} onValueChange={(v) => setTipo(v as Tipo)} className="grid grid-cols-3 gap-2">
-              {(["retirada", "local", "entrega"] as Tipo[]).map((t) => (
-                <label key={t} className={`cursor-pointer rounded-lg border p-3 text-center text-sm capitalize transition ${tipo === t ? "border-primary bg-primary/5" : "border-border"}`}>
+            <RadioGroup value={tipo} onValueChange={(v) => setTipo(v as Tipo)} className="grid grid-cols-2 gap-2">
+              {(["retirada", "entrega"] as Tipo[]).map((t) => (
+                <label key={t} className={`cursor-pointer rounded-lg border p-3 text-center text-sm font-medium capitalize transition ${tipo === t ? "border-primary bg-primary/5" : "border-border"}`}>
                   <RadioGroupItem value={t} className="sr-only" />
-                  {t === "retirada" ? "Retirar" : t === "local" ? "No local" : "Entrega"}
+                  {t === "retirada" ? "Retirar na padaria" : "Entrega"}
                 </label>
               ))}
             </RadioGroup>
@@ -131,14 +135,26 @@ function CheckoutPage() {
               <Input id="tel" value={telefone} onChange={(e) => setTelefone(e.target.value)} required />
             </div>
             {tipo === "entrega" && (
+              <>
+                <div>
+                  <Label htmlFor="end">Endereço (rua, número, complemento) *</Label>
+                  <Textarea id="end" value={endereco} onChange={(e) => setEndereco(e.target.value)} rows={2} required />
+                </div>
+                <div>
+                  <Label htmlFor="bairro">Bairro *</Label>
+                  <Input id="bairro" value={bairro} onChange={(e) => setBairro(e.target.value)} required />
+                </div>
+              </>
+            )}
+            {tipo === "retirada" && (
               <div>
-                <Label htmlFor="end">Endereço de entrega *</Label>
-                <Textarea id="end" value={endereco} onChange={(e) => setEndereco(e.target.value)} rows={2} required />
+                <Label htmlFor="hora">Horário previsto para retirada</Label>
+                <Input id="hora" type="datetime-local" value={horarioRetirada} onChange={(e) => setHorarioRetirada(e.target.value)} />
               </div>
             )}
             <div>
               <Label htmlFor="obs">Observações</Label>
-              <Textarea id="obs" value={obs} onChange={(e) => setObs(e.target.value)} rows={2} placeholder="Ex: sem cebola, ponto da carne…" />
+              <Textarea id="obs" value={obs} onChange={(e) => setObs(e.target.value)} rows={2} placeholder="Ex: pão bem assado, sem gergelim…" />
             </div>
           </section>
 
