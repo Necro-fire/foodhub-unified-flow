@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Card } from "@/components/ui/card";
 import { fmtMoney } from "@/lib/format";
-import { TrendingUp, ShoppingBag, Clock, DollarSign, Coffee, Bike, PackageCheck, CheckCircle2, Flame, Sparkles } from "lucide-react";
+import { TrendingUp, ShoppingBag, Clock, DollarSign, Coffee, Bike, PackageCheck, CheckCircle2, Flame, Sparkles, Truck } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, BarChart, Bar, CartesianGrid } from "recharts";
 
 export const Route = createFileRoute("/_authenticated/admin/")({
@@ -100,10 +100,11 @@ function Dashboard() {
 
       <div>
         <h2 className="mb-2 text-sm font-semibold text-muted-foreground">Por status</h2>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
           <StatusCard icon={Sparkles} label="Novos" value={s?.novos ?? 0} />
-          <StatusCard icon={Flame} label="Em Preparo" value={s?.emPreparo ?? 0} />
+          <StatusCard icon={Flame} label="Em Produção" value={s?.emPreparo ?? 0} />
           <StatusCard icon={PackageCheck} label="Prontos" value={s?.prontos ?? 0} />
+          <StatusCard icon={Truck} label="Em Rota" value={s?.emRota ?? 0} />
           <StatusCard icon={CheckCircle2} label="Entregues" value={s?.entregues ?? 0} />
         </div>
       </div>
