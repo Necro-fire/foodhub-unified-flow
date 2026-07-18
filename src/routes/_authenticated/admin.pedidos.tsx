@@ -85,8 +85,20 @@ function PedidosPage() {
 
   const byStatus = (k: string) => {
     if (k === "em_preparo") return filtered.filter((o) => o.status === "em_preparo" || o.status === "confirmado");
-    if (k === "pronto") return filtered.filter((o) => o.status === "pronto" || o.status === "saiu_entrega");
+    if (k === "em_rota") return filtered.filter((o) => o.status === "em_rota" || o.status === "saiu_entrega");
     return filtered.filter((o) => o.status === k);
+  };
+
+  const nextStatus = (colKey: string, o: any): { status: string; label: string } | null => {
+    if (colKey === "novo") return { status: "em_preparo", label: "Iniciar produção" };
+    if (colKey === "em_preparo") return { status: "pronto", label: "Marcar pronto" };
+    if (colKey === "pronto") {
+      return o.tipo === "entrega"
+        ? { status: "em_rota", label: "Enviar para entrega" }
+        : { status: "entregue", label: "Marcar entregue" };
+    }
+    if (colKey === "em_rota") return { status: "entregue", label: "Confirmar entrega" };
+    return null;
   };
 
   return (
@@ -96,7 +108,7 @@ function PedidosPage() {
           <h1 className="font-display text-2xl font-bold">Pedidos</h1>
           <p className="text-sm text-muted-foreground">Acompanhe e atualize o status em tempo real.</p>
         </div>
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+        <div className="grid w-full grid-cols-2 gap-2 sm:w-auto sm:grid-cols-4">
           <Input placeholder="Buscar nº/cliente/tel" value={busca} onChange={(e) => setBusca(e.target.value)} />
           <Select value={tipoFilter} onValueChange={setTipoFilter}>
             <SelectTrigger><SelectValue placeholder="Categoria" /></SelectTrigger>
@@ -112,43 +124,55 @@ function PedidosPage() {
         </div>
       </div>
 
-      <div className="grid gap-3 lg:grid-cols-4">
-        {COLUMNS.map((col) => (
-          <div key={col.key} className="flex flex-col gap-2">
-            <div className="flex items-center justify-between px-1">
-              <h3 className="text-sm font-semibold">{col.label}</h3>
-              <Badge variant="secondary">{byStatus(col.key).length}</Badge>
-            </div>
-            <div className="flex min-h-[200px] flex-col gap-2 rounded-lg bg-muted/40 p-2">
-              {byStatus(col.key).map((o) => (
-                <Card
-                  key={o.id}
-                  className={`cursor-pointer p-3 border-l-4 hover:shadow-elevated ${tipoColor[o.tipo] ?? ""}`}
-                  onClick={() => setDetail(o)}
-                >
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <div className="font-mono text-sm font-bold">#{o.numero}</div>
-                      <div className="text-xs text-muted-foreground">{fmtTime(o.created_at)} · {origemLabel[o.origem]}</div>
-                    </div>
-                    <div className="text-right text-sm font-semibold">{fmtMoney(o.total)}</div>
-                  </div>
-                  <div className="mt-1 truncate text-xs">{o.cliente_nome ?? "Sem cliente"}</div>
-                  <div className="mt-1 flex items-center gap-1.5 text-xs">
-                    <span className={`h-2 w-2 rounded-full ${tipoDot[o.tipo] ?? "bg-muted"}`} />
-                    <span className="font-medium">{tipoLabel[o.tipo]}</span>
-                  </div>
-                  {col.next && (
-                    <Button size="sm" className="mt-2 w-full" onClick={(e) => { e.stopPropagation(); updateStatus.mutate({ id: o.id, status: col.next! }); }}>
-                      Avançar →
-                    </Button>
-                  )}
-                </Card>
-              ))}
-              {byStatus(col.key).length === 0 && <div className="py-6 text-center text-xs text-muted-foreground">vazio</div>}
-            </div>
-          </div>
-        ))}
+      <div className="-mx-4 overflow-x-auto px-4 pb-2 md:mx-0 md:px-0">
+        <div className="grid min-w-[1100px] gap-3 md:min-w-0 md:grid-cols-3 xl:grid-cols-5" style={{ gridTemplateColumns: "repeat(5, minmax(220px, 1fr))" }}>
+          {COLUMNS.map((col) => {
+            const Icon = col.icon;
+            const items = byStatus(col.key);
+            return (
+              <div key={col.key} className="flex flex-col gap-2">
+                <div className="flex items-center justify-between px-1">
+                  <h3 className="flex items-center gap-1.5 text-sm font-semibold">
+                    {Icon && <Icon className="h-4 w-4 text-chart-4" />}
+                    {col.label}
+                  </h3>
+                  <Badge variant="secondary">{items.length}</Badge>
+                </div>
+                <div className={`flex min-h-[200px] flex-col gap-2 rounded-lg p-2 ${col.tone ?? "bg-muted/40"}`}>
+                  {items.map((o) => {
+                    const next = nextStatus(col.key, o);
+                    return (
+                      <Card
+                        key={o.id}
+                        className={`cursor-pointer p-3 border-l-4 hover:shadow-elevated ${tipoColor[o.tipo] ?? ""}`}
+                        onClick={() => setDetail(o)}
+                      >
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="min-w-0">
+                            <div className="font-mono text-sm font-bold">#{o.numero}</div>
+                            <div className="truncate text-xs text-muted-foreground">{fmtTime(o.created_at)} · {origemLabel[o.origem]}</div>
+                          </div>
+                          <div className="shrink-0 text-right text-sm font-semibold">{fmtMoney(o.total)}</div>
+                        </div>
+                        <div className="mt-1 truncate text-xs">{o.cliente_nome ?? "Sem cliente"}</div>
+                        <div className="mt-1 flex items-center gap-1.5 text-xs">
+                          <span className={`h-2 w-2 rounded-full ${tipoDot[o.tipo] ?? "bg-muted"}`} />
+                          <span className="font-medium">{tipoLabel[o.tipo]}</span>
+                        </div>
+                        {next && (
+                          <Button size="sm" className="mt-2 w-full" onClick={(e) => { e.stopPropagation(); updateStatus.mutate({ id: o.id, status: next.status }); }}>
+                            {next.label} →
+                          </Button>
+                        )}
+                      </Card>
+                    );
+                  })}
+                  {items.length === 0 && <div className="py-6 text-center text-xs text-muted-foreground">vazio</div>}
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
 
       {detail && <OrderDetail order={detail} onClose={() => setDetail(null)} onUpdate={(s: string) => updateStatus.mutate({ id: detail.id, status: s })} />}
