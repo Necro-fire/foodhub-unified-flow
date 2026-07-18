@@ -13,9 +13,9 @@ export const fmtTime = (d: string | Date) =>
 export const statusLabel: Record<string, string> = {
   novo: "Novo Pedido",
   confirmado: "Confirmado",
-  em_preparo: "Em Preparo",
+  em_preparo: "Em Produção",
   pronto: "Pronto",
-  saiu_entrega: "Saiu p/ entrega",
+  saiu_entrega: "Em Rota de Entrega",
   entregue: "Pedido Entregue",
   finalizado: "Finalizado",
   cancelado: "Cancelado",
