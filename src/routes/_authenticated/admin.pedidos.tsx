@@ -41,7 +41,7 @@ function PedidosPage() {
       const { data } = await supabase
         .from("orders")
         .select("*, order_items(*)")
-        .or(`status.in.(novo,confirmado,em_preparo,pronto,saiu_entrega),and(status.eq.entregue,created_at.gte.${since.toISOString()})`)
+        .or(`status.in.(novo,confirmado,em_preparo,pronto,em_rota,saiu_entrega),and(status.eq.entregue,created_at.gte.${since.toISOString()})`)
         .order("created_at", { ascending: true });
       return data ?? [];
     },
