@@ -12,17 +12,18 @@ import {
   fmtMoney, fmtTime, fmtDate, statusLabel, statusColor,
   paymentLabel, tipoLabel, tipoColor, tipoDot, origemLabel,
 } from "@/lib/format";
-import { Printer } from "lucide-react";
+import { Printer, Truck } from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/admin/pedidos")({
   component: PedidosPage,
 });
 
-const COLUMNS: Array<{ key: string; label: string; next?: string }> = [
-  { key: "novo", label: "Novos Pedidos", next: "em_preparo" },
-  { key: "em_preparo", label: "Em Preparo", next: "pronto" },
-  { key: "pronto", label: "Prontos", next: "entregue" },
+const COLUMNS: Array<{ key: string; label: string; icon?: any; tone?: string }> = [
+  { key: "novo", label: "Novos Pedidos" },
+  { key: "em_preparo", label: "Em Produção" },
+  { key: "pronto", label: "Prontos" },
+  { key: "em_rota", label: "Em Rota de Entrega", icon: Truck, tone: "bg-chart-4/10 border-chart-4/40" },
   { key: "entregue", label: "Pedido Entregue" },
 ];
 
