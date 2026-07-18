@@ -23,7 +23,7 @@ const COLUMNS: Array<{ key: string; label: string; icon?: any; tone?: string }> 
   { key: "novo", label: "Novos Pedidos" },
   { key: "em_preparo", label: "Em Produção" },
   { key: "pronto", label: "Prontos" },
-  { key: "em_rota", label: "Em Rota de Entrega", icon: Truck, tone: "bg-chart-4/10 border-chart-4/40" },
+  { key: "saiu_entrega", label: "Em Rota de Entrega", icon: Truck, tone: "bg-chart-4/10 border-chart-4/40" },
   { key: "entregue", label: "Pedido Entregue" },
 ];
 
@@ -41,7 +41,7 @@ function PedidosPage() {
       const { data } = await supabase
         .from("orders")
         .select("*, order_items(*)")
-        .or(`status.in.(novo,confirmado,em_preparo,pronto,em_rota,saiu_entrega),and(status.eq.entregue,created_at.gte.${since.toISOString()})`)
+        .or(`status.in.(novo,confirmado,em_preparo,pronto,saiu_entrega),and(status.eq.entregue,created_at.gte.${since.toISOString()})`)
         .order("created_at", { ascending: true });
       return data ?? [];
     },
@@ -85,7 +85,7 @@ function PedidosPage() {
 
   const byStatus = (k: string) => {
     if (k === "em_preparo") return filtered.filter((o) => o.status === "em_preparo" || o.status === "confirmado");
-    if (k === "em_rota") return filtered.filter((o) => o.status === "em_rota" || o.status === "saiu_entrega");
+    if (k === "saiu_entrega") return filtered.filter((o) => o.status === "saiu_entrega");
     return filtered.filter((o) => o.status === k);
   };
 
@@ -94,10 +94,10 @@ function PedidosPage() {
     if (colKey === "em_preparo") return { status: "pronto", label: "Marcar pronto" };
     if (colKey === "pronto") {
       return o.tipo === "entrega"
-        ? { status: "em_rota", label: "Enviar para entrega" }
+        ? { status: "saiu_entrega", label: "Enviar para entrega" }
         : { status: "entregue", label: "Marcar entregue" };
     }
-    if (colKey === "em_rota") return { status: "entregue", label: "Confirmar entrega" };
+    if (colKey === "saiu_entrega") return { status: "entregue", label: "Confirmar entrega" };
     return null;
   };
 

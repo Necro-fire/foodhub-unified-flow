@@ -13,9 +13,8 @@ export const fmtTime = (d: string | Date) =>
 export const statusLabel: Record<string, string> = {
   novo: "Novo Pedido",
   confirmado: "Confirmado",
-  em_preparo: "Em Preparo",
+  em_preparo: "Em Produção",
   pronto: "Pronto",
-  em_rota: "Em Rota de Entrega",
   saiu_entrega: "Em Rota de Entrega",
   entregue: "Pedido Entregue",
   finalizado: "Finalizado",
@@ -27,7 +26,6 @@ export const statusColor: Record<string, string> = {
   confirmado: "bg-chart-4/20 text-chart-4",
   em_preparo: "bg-warning text-warning-foreground",
   pronto: "bg-accent text-accent-foreground",
-  em_rota: "bg-chart-4 text-white",
   saiu_entrega: "bg-chart-4 text-white",
   entregue: "bg-success text-success-foreground",
   finalizado: "bg-success text-success-foreground",
