@@ -35,7 +35,8 @@ function Dashboard() {
       const open = openOrders.data ?? [];
       const novos = open.filter((o) => o.status === "novo").length;
       const emPreparo = open.filter((o) => o.status === "em_preparo" || o.status === "confirmado").length;
-      const prontos = open.filter((o) => o.status === "pronto" || o.status === "saiu_entrega").length;
+      const prontos = open.filter((o) => o.status === "pronto").length;
+      const emRota = open.filter((o) => o.status === "saiu_entrega").length;
 
       const td = todayByTipo.data ?? [];
       const tipoMesa = td.filter((o) => o.tipo === "local").length;
@@ -65,7 +66,7 @@ function Dashboard() {
       return {
         totalHoje, pedidosHoje, totalMes, ticketMedio,
         pendentes: open.length,
-        novos, emPreparo, prontos, entregues,
+        novos, emPreparo, prontos, emRota, entregues,
         tipoMesa, tipoEntrega, tipoRetirada,
         chart7, top5,
       };
