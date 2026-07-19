@@ -54,6 +54,10 @@ function ConfigPage() {
         </div>
         <div><Label>Endereço</Label><Input value={form.endereco ?? ""} onChange={(e) => setForm({ ...form, endereco: e.target.value })} /></div>
         <div><Label>Taxa de entrega (R$)</Label><Input type="number" step="0.01" value={form.taxa_entrega} onChange={(e) => setForm({ ...form, taxa_entrega: e.target.value })} /></div>
+        <div>
+          <Label>WhatsApp do suporte (com DDI, ex: +55 11 99999-9999)</Label>
+          <Input value={form.whatsapp_suporte ?? ""} onChange={(e) => setForm({ ...form, whatsapp_suporte: e.target.value })} placeholder="+5511999999999" />
+        </div>
         <label className="flex items-center gap-2 text-sm">
           <Switch checked={form.aceita_pedidos_online} onCheckedChange={(v) => setForm({ ...form, aceita_pedidos_online: v })} />
           Aceitar pedidos online
