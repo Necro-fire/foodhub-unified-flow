@@ -20,6 +20,7 @@ import { Route as PedidoNumeroRouteImport } from './routes/pedido.$numero'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedAdminVendasRouteImport } from './routes/_authenticated/admin.vendas'
+import { Route as AuthenticatedAdminSuporteRouteImport } from './routes/_authenticated/admin.suporte'
 import { Route as AuthenticatedAdminPedidosRouteImport } from './routes/_authenticated/admin.pedidos'
 import { Route as AuthenticatedAdminPdvRouteImport } from './routes/_authenticated/admin.pdv'
 import { Route as AuthenticatedAdminMesasRouteImport } from './routes/_authenticated/admin.mesas'
@@ -82,6 +83,12 @@ const AuthenticatedAdminVendasRoute =
     path: '/vendas',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminSuporteRoute =
+  AuthenticatedAdminSuporteRouteImport.update({
+    id: '/suporte',
+    path: '/suporte',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminPedidosRoute =
   AuthenticatedAdminPedidosRouteImport.update({
     id: '/pedidos',
@@ -131,6 +138,7 @@ export interface FileRoutesByFullPath {
   '/admin/mesas': typeof AuthenticatedAdminMesasRoute
   '/admin/pdv': typeof AuthenticatedAdminPdvRoute
   '/admin/pedidos': typeof AuthenticatedAdminPedidosRoute
+  '/admin/suporte': typeof AuthenticatedAdminSuporteRoute
   '/admin/vendas': typeof AuthenticatedAdminVendasRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
 }
@@ -148,6 +156,7 @@ export interface FileRoutesByTo {
   '/admin/mesas': typeof AuthenticatedAdminMesasRoute
   '/admin/pdv': typeof AuthenticatedAdminPdvRoute
   '/admin/pedidos': typeof AuthenticatedAdminPedidosRoute
+  '/admin/suporte': typeof AuthenticatedAdminSuporteRoute
   '/admin/vendas': typeof AuthenticatedAdminVendasRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
 }
@@ -168,6 +177,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/mesas': typeof AuthenticatedAdminMesasRoute
   '/_authenticated/admin/pdv': typeof AuthenticatedAdminPdvRoute
   '/_authenticated/admin/pedidos': typeof AuthenticatedAdminPedidosRoute
+  '/_authenticated/admin/suporte': typeof AuthenticatedAdminSuporteRoute
   '/_authenticated/admin/vendas': typeof AuthenticatedAdminVendasRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
 }
@@ -188,6 +198,7 @@ export interface FileRouteTypes {
     | '/admin/mesas'
     | '/admin/pdv'
     | '/admin/pedidos'
+    | '/admin/suporte'
     | '/admin/vendas'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
@@ -205,6 +216,7 @@ export interface FileRouteTypes {
     | '/admin/mesas'
     | '/admin/pdv'
     | '/admin/pedidos'
+    | '/admin/suporte'
     | '/admin/vendas'
     | '/admin'
   id:
@@ -224,6 +236,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/mesas'
     | '/_authenticated/admin/pdv'
     | '/_authenticated/admin/pedidos'
+    | '/_authenticated/admin/suporte'
     | '/_authenticated/admin/vendas'
     | '/_authenticated/admin/'
   fileRoutesById: FileRoutesById
@@ -318,6 +331,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminVendasRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/suporte': {
+      id: '/_authenticated/admin/suporte'
+      path: '/suporte'
+      fullPath: '/admin/suporte'
+      preLoaderRoute: typeof AuthenticatedAdminSuporteRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/pedidos': {
       id: '/_authenticated/admin/pedidos'
       path: '/pedidos'
@@ -370,6 +390,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminMesasRoute: typeof AuthenticatedAdminMesasRoute
   AuthenticatedAdminPdvRoute: typeof AuthenticatedAdminPdvRoute
   AuthenticatedAdminPedidosRoute: typeof AuthenticatedAdminPedidosRoute
+  AuthenticatedAdminSuporteRoute: typeof AuthenticatedAdminSuporteRoute
   AuthenticatedAdminVendasRoute: typeof AuthenticatedAdminVendasRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
@@ -381,6 +402,7 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminMesasRoute: AuthenticatedAdminMesasRoute,
   AuthenticatedAdminPdvRoute: AuthenticatedAdminPdvRoute,
   AuthenticatedAdminPedidosRoute: AuthenticatedAdminPedidosRoute,
+  AuthenticatedAdminSuporteRoute: AuthenticatedAdminSuporteRoute,
   AuthenticatedAdminVendasRoute: AuthenticatedAdminVendasRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
 }
@@ -412,13 +434,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

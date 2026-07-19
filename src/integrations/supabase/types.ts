@@ -432,6 +432,7 @@ export type Database = {
           taxa_entrega: number
           telefone: string | null
           updated_at: string
+          whatsapp_suporte: string | null
         }
         Insert: {
           aceita_pedidos_online?: boolean
@@ -446,6 +447,7 @@ export type Database = {
           taxa_entrega?: number
           telefone?: string | null
           updated_at?: string
+          whatsapp_suporte?: string | null
         }
         Update: {
           aceita_pedidos_online?: boolean
@@ -460,8 +462,190 @@ export type Database = {
           taxa_entrega?: number
           telefone?: string | null
           updated_at?: string
+          whatsapp_suporte?: string | null
         }
         Relationships: []
+      }
+      support_categories: {
+        Row: {
+          ativo: boolean
+          created_at: string
+          icone: string | null
+          id: string
+          nome: string
+          ordem: number
+          slug: string
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          created_at?: string
+          icone?: string | null
+          id?: string
+          nome: string
+          ordem?: number
+          slug: string
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          created_at?: string
+          icone?: string | null
+          id?: string
+          nome?: string
+          ordem?: number
+          slug?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      support_problems: {
+        Row: {
+          ativo: boolean
+          category_id: string
+          causas: string[]
+          created_at: string
+          descricao: string | null
+          doc_url: string | null
+          id: string
+          imagem_url: string | null
+          observacoes: string | null
+          ordem: number
+          passos: string[]
+          titulo: string
+          updated_at: string
+          video_url: string | null
+        }
+        Insert: {
+          ativo?: boolean
+          category_id: string
+          causas?: string[]
+          created_at?: string
+          descricao?: string | null
+          doc_url?: string | null
+          id?: string
+          imagem_url?: string | null
+          observacoes?: string | null
+          ordem?: number
+          passos?: string[]
+          titulo: string
+          updated_at?: string
+          video_url?: string | null
+        }
+        Update: {
+          ativo?: boolean
+          category_id?: string
+          causas?: string[]
+          created_at?: string
+          descricao?: string | null
+          doc_url?: string | null
+          id?: string
+          imagem_url?: string | null
+          observacoes?: string | null
+          ordem?: number
+          passos?: string[]
+          titulo?: string
+          updated_at?: string
+          video_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "support_problems_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "support_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      support_ratings: {
+        Row: {
+          comentario: string | null
+          created_at: string
+          estrelas: number
+          ticket_id: string
+          user_id: string
+        }
+        Insert: {
+          comentario?: string | null
+          created_at?: string
+          estrelas: number
+          ticket_id: string
+          user_id: string
+        }
+        Update: {
+          comentario?: string | null
+          created_at?: string
+          estrelas?: number
+          ticket_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "support_ratings_ticket_id_fkey"
+            columns: ["ticket_id"]
+            isOneToOne: true
+            referencedRelation: "support_tickets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      support_tickets: {
+        Row: {
+          categoria_nome: string | null
+          category_id: string | null
+          created_at: string
+          descricao_adicional: string | null
+          encaminhado_whatsapp: boolean
+          id: string
+          problem_id: string | null
+          problema_titulo: string | null
+          resolvido: boolean | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          categoria_nome?: string | null
+          category_id?: string | null
+          created_at?: string
+          descricao_adicional?: string | null
+          encaminhado_whatsapp?: boolean
+          id?: string
+          problem_id?: string | null
+          problema_titulo?: string | null
+          resolvido?: boolean | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          categoria_nome?: string | null
+          category_id?: string | null
+          created_at?: string
+          descricao_adicional?: string | null
+          encaminhado_whatsapp?: boolean
+          id?: string
+          problem_id?: string | null
+          problema_titulo?: string | null
+          resolvido?: boolean | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "support_tickets_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "support_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "support_tickets_problem_id_fkey"
+            columns: ["problem_id"]
+            isOneToOne: false
+            referencedRelation: "support_problems"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_roles: {
         Row: {
