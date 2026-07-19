@@ -33,7 +33,8 @@ function ConfigPage() {
         endereco: form.endereco,
         taxa_entrega: Number(form.taxa_entrega),
         aceita_pedidos_online: form.aceita_pedidos_online,
-      }).eq("id", 1);
+        whatsapp_suporte: form.whatsapp_suporte ?? "",
+      } as any).eq("id", 1);
     },
     onSuccess: () => { qc.invalidateQueries(); toast.success("Salvo"); },
     onError: (e: any) => toast.error(e.message),
