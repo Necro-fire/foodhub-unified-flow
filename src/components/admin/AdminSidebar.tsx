@@ -15,6 +15,7 @@ const items = [
   { title: "Caixa", url: "/admin/caixa", icon: Wallet },
   { title: "Vendas", url: "/admin/vendas", icon: ShoppingCart },
   { title: "Catálogo", url: "/admin/catalogo", icon: Package },
+  { title: "Suporte", url: "/admin/suporte", icon: LifeBuoy },
   { title: "Configurações", url: "/admin/configuracoes", icon: Settings },
 ];
 
