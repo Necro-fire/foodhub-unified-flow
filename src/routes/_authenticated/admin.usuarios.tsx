@@ -115,7 +115,7 @@ function PermsMatrix() {
     mutationFn: async ({ role, module, field, value }: { role: string; module: string; field: "can_view" | "can_edit"; value: boolean }) => {
       const existing = (perms.data ?? []).find((p: any) => p.role === role && p.module === module);
       if (existing) {
-        await supabase.from("role_permissions").update({ [field]: value }).eq("id", existing.id);
+        await supabase.from("role_permissions").update({ [field]: value } as any).eq("id", existing.id);
       } else {
         await supabase.from("role_permissions").insert({ role: role as any, module, can_view: field === "can_view" ? value : false, can_edit: field === "can_edit" ? value : false });
       }
