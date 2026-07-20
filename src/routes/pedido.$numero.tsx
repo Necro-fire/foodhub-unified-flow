@@ -56,7 +56,7 @@ function OrderPage() {
           <div className="flex justify-between"><span className="text-muted-foreground">Cliente</span><span>{o.cliente_nome}</span></div>
           <div className="flex justify-between"><span className="text-muted-foreground">Telefone</span><span>{o.cliente_telefone}</span></div>
           <div className="flex justify-between"><span className="text-muted-foreground">Tipo</span><span>{tipoLabel[o.tipo]}</span></div>
-          <div className="flex justify-between"><span className="text-muted-foreground">Pagamento</span><span>{paymentLabel[o.forma_pagamento]}</span></div>
+          <div className="flex justify-between"><span className="text-muted-foreground">Pagamento</span><span>{o.forma_pagamento ? paymentLabel[o.forma_pagamento] : "—"}</span></div>
           {o.cliente_endereco && <div className="border-t pt-2 text-muted-foreground">Endereço: {o.cliente_endereco}</div>}
         </div>
 

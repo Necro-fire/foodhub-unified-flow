@@ -8,8 +8,9 @@ import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { fmtMoney } from "@/lib/format";
-import { Coffee, Plus, Trash2, ArrowRightLeft } from "lucide-react";
+import { Coffee, Plus, Trash2, ArrowRightLeft, QrCode } from "lucide-react";
 import { toast } from "sonner";
+import { QRCodeSVG } from "qrcode.react";
 
 export const Route = createFileRoute("/_authenticated/admin/mesas")({
   component: MesasPage,
@@ -18,6 +19,7 @@ export const Route = createFileRoute("/_authenticated/admin/mesas")({
 function MesasPage() {
   const qc = useQueryClient();
   const [selected, setSelected] = useState<any | null>(null);
+  const [qrMesa, setQrMesa] = useState<any | null>(null);
   const tables = useQuery({
     queryKey: ["tables"],
     queryFn: async () => (await supabase.from("restaurant_tables").select("*").order("numero")).data ?? [],
@@ -60,19 +62,51 @@ function MesasPage() {
           const order = (openOrders.data ?? []).find((o) => o.mesa_id === m.id);
           const ocupada = m.status === "ocupada" || !!order;
           return (
-            <button key={m.id} onClick={() => setSelected({ mesa: m, order })} className={`rounded-xl border-2 p-4 text-left transition ${ocupada ? "border-primary bg-primary/10" : "border-border bg-card hover:border-primary/40"}`}>
-              <Coffee className={`mb-2 h-6 w-6 ${ocupada ? "text-primary" : "text-muted-foreground"}`} />
-              <div className="font-display text-2xl font-bold">Mesa {m.numero}</div>
-              <div className="text-xs text-muted-foreground">{m.capacidade} lugares</div>
-              <div className={`mt-1 text-xs font-medium ${ocupada ? "text-primary" : "text-success"}`}>{ocupada ? "Ocupada" : "Livre"}</div>
-              {order && <div className="mt-1 text-sm font-semibold">{fmtMoney(order.total)}</div>}
-            </button>
+            <div key={m.id} className={`relative rounded-xl border-2 p-4 text-left transition ${ocupada ? "border-primary bg-primary/10" : "border-border bg-card hover:border-primary/40"}`}>
+              <button
+                type="button"
+                onClick={(e) => { e.stopPropagation(); setQrMesa(m); }}
+                title="Mostrar QR Code"
+                className="absolute right-2 top-2 rounded-md p-1 text-muted-foreground hover:bg-background hover:text-foreground"
+              >
+                <QrCode className="h-4 w-4" />
+              </button>
+              <button type="button" onClick={() => setSelected({ mesa: m, order })} className="block w-full text-left">
+                <Coffee className={`mb-2 h-6 w-6 ${ocupada ? "text-primary" : "text-muted-foreground"}`} />
+                <div className="font-display text-2xl font-bold">Mesa {m.numero}</div>
+                <div className="text-xs text-muted-foreground">{m.capacidade} lugares</div>
+                <div className={`mt-1 text-xs font-medium ${ocupada ? "text-primary" : "text-success"}`}>{ocupada ? "Ocupada" : "Livre"}</div>
+                {order && <div className="mt-1 text-sm font-semibold">{fmtMoney(order.total)}</div>}
+              </button>
+            </div>
           );
         })}
       </div>
 
+      {qrMesa && <QrDialog mesa={qrMesa} onClose={() => setQrMesa(null)} />}
       {selected && <MesaDialog mesa={selected.mesa} order={selected.order} tables={tables.data ?? []} onClose={() => { setSelected(null); qc.invalidateQueries(); }} />}
     </div>
+  );
+}
+
+function QrDialog({ mesa, onClose }: any) {
+  const url = typeof window !== "undefined" ? `${window.location.origin}/mesa/${mesa.numero}` : "";
+  return (
+    <Dialog open onOpenChange={onClose}>
+      <DialogContent className="max-w-sm">
+        <DialogHeader><DialogTitle>QR Code — Mesa {mesa.numero}</DialogTitle></DialogHeader>
+        <div className="flex flex-col items-center gap-3">
+          <div className="rounded-lg bg-white p-4">
+            <QRCodeSVG value={url} size={220} />
+          </div>
+          <p className="text-center text-xs text-muted-foreground break-all">{url}</p>
+          <Button variant="outline" size="sm" onClick={() => { navigator.clipboard.writeText(url); toast.success("Link copiado"); }}>
+            Copiar link
+          </Button>
+          <Button variant="outline" size="sm" onClick={() => window.print()}>Imprimir</Button>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }
 

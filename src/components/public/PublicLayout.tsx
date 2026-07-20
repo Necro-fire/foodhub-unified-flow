@@ -1,12 +1,22 @@
 import { Link } from "@tanstack/react-router";
-import { ShoppingBag, Croissant } from "lucide-react";
+import { ShoppingBag, Croissant, Coffee, X } from "lucide-react";
 import { useCart } from "@/lib/cart";
+import { useMesaSession } from "@/lib/mesa-session";
 import { Badge } from "@/components/ui/badge";
 
 export function PublicLayout({ children }: { children: React.ReactNode }) {
   const { count } = useCart();
+  const { mesa, setMesa } = useMesaSession();
   return (
     <div className="min-h-screen bg-background">
+      {mesa && (
+        <div className="flex items-center justify-between gap-2 bg-primary px-4 py-1.5 text-xs text-primary-foreground">
+          <span className="inline-flex items-center gap-1.5"><Coffee className="h-3 w-3" /> Você está na Mesa {mesa.numero}</span>
+          <button onClick={() => setMesa(null)} className="inline-flex items-center gap-1 opacity-80 hover:opacity-100">
+            <X className="h-3 w-3" /> Sair
+          </button>
+        </div>
+      )}
       <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
           <Link to="/" className="flex items-center gap-2">

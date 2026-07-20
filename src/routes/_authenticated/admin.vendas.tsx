@@ -116,7 +116,7 @@ function VendasPage() {
                   <td className="px-3 py-2">{o.cliente_nome ?? "—"}</td>
                   <td className="px-3 py-2"><Badge className={tipoColor[o.tipo]}>{tipoLabel[o.tipo]}</Badge></td>
                   <td className="px-3 py-2">{origemLabel[o.origem]}</td>
-                  <td className="px-3 py-2">{paymentLabel[o.forma_pagamento]}</td>
+                  <td className="px-3 py-2">{o.forma_pagamento ? paymentLabel[o.forma_pagamento] : "—"}</td>
                   <td className="px-3 py-2"><Badge className={statusColor[o.status]}>{statusLabel[o.status]}</Badge></td>
                   <td className="px-3 py-2 text-right font-semibold">{fmtMoney(o.total)}</td>
                 </tr>

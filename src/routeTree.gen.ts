@@ -17,6 +17,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PedidoNumeroRouteImport } from './routes/pedido.$numero'
+import { Route as MesaNumeroRouteImport } from './routes/mesa.$numero'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedAdminVendasRouteImport } from './routes/_authenticated/admin.vendas'
@@ -24,6 +25,7 @@ import { Route as AuthenticatedAdminSuporteRouteImport } from './routes/_authent
 import { Route as AuthenticatedAdminPedidosRouteImport } from './routes/_authenticated/admin.pedidos'
 import { Route as AuthenticatedAdminPdvRouteImport } from './routes/_authenticated/admin.pdv'
 import { Route as AuthenticatedAdminMesasRouteImport } from './routes/_authenticated/admin.mesas'
+import { Route as AuthenticatedAdminKdsRouteImport } from './routes/_authenticated/admin.kds'
 import { Route as AuthenticatedAdminConfiguracoesRouteImport } from './routes/_authenticated/admin.configuracoes'
 import { Route as AuthenticatedAdminCatalogoRouteImport } from './routes/_authenticated/admin.catalogo'
 import { Route as AuthenticatedAdminCaixaRouteImport } from './routes/_authenticated/admin.caixa'
@@ -67,6 +69,11 @@ const PedidoNumeroRoute = PedidoNumeroRouteImport.update({
   path: '/pedido/$numero',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MesaNumeroRoute = MesaNumeroRouteImport.update({
+  id: '/mesa/$numero',
+  path: '/mesa/$numero',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -105,6 +112,11 @@ const AuthenticatedAdminMesasRoute = AuthenticatedAdminMesasRouteImport.update({
   path: '/mesas',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
+const AuthenticatedAdminKdsRoute = AuthenticatedAdminKdsRouteImport.update({
+  id: '/kds',
+  path: '/kds',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
 const AuthenticatedAdminConfiguracoesRoute =
   AuthenticatedAdminConfiguracoesRouteImport.update({
     id: '/configuracoes',
@@ -131,10 +143,12 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/mesa/$numero': typeof MesaNumeroRoute
   '/pedido/$numero': typeof PedidoNumeroRoute
   '/admin/caixa': typeof AuthenticatedAdminCaixaRoute
   '/admin/catalogo': typeof AuthenticatedAdminCatalogoRoute
   '/admin/configuracoes': typeof AuthenticatedAdminConfiguracoesRoute
+  '/admin/kds': typeof AuthenticatedAdminKdsRoute
   '/admin/mesas': typeof AuthenticatedAdminMesasRoute
   '/admin/pdv': typeof AuthenticatedAdminPdvRoute
   '/admin/pedidos': typeof AuthenticatedAdminPedidosRoute
@@ -149,10 +163,12 @@ export interface FileRoutesByTo {
   '/checkout': typeof CheckoutRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/mesa/$numero': typeof MesaNumeroRoute
   '/pedido/$numero': typeof PedidoNumeroRoute
   '/admin/caixa': typeof AuthenticatedAdminCaixaRoute
   '/admin/catalogo': typeof AuthenticatedAdminCatalogoRoute
   '/admin/configuracoes': typeof AuthenticatedAdminConfiguracoesRoute
+  '/admin/kds': typeof AuthenticatedAdminKdsRoute
   '/admin/mesas': typeof AuthenticatedAdminMesasRoute
   '/admin/pdv': typeof AuthenticatedAdminPdvRoute
   '/admin/pedidos': typeof AuthenticatedAdminPedidosRoute
@@ -170,10 +186,12 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/mesa/$numero': typeof MesaNumeroRoute
   '/pedido/$numero': typeof PedidoNumeroRoute
   '/_authenticated/admin/caixa': typeof AuthenticatedAdminCaixaRoute
   '/_authenticated/admin/catalogo': typeof AuthenticatedAdminCatalogoRoute
   '/_authenticated/admin/configuracoes': typeof AuthenticatedAdminConfiguracoesRoute
+  '/_authenticated/admin/kds': typeof AuthenticatedAdminKdsRoute
   '/_authenticated/admin/mesas': typeof AuthenticatedAdminMesasRoute
   '/_authenticated/admin/pdv': typeof AuthenticatedAdminPdvRoute
   '/_authenticated/admin/pedidos': typeof AuthenticatedAdminPedidosRoute
@@ -191,10 +209,12 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/sitemap.xml'
     | '/admin'
+    | '/mesa/$numero'
     | '/pedido/$numero'
     | '/admin/caixa'
     | '/admin/catalogo'
     | '/admin/configuracoes'
+    | '/admin/kds'
     | '/admin/mesas'
     | '/admin/pdv'
     | '/admin/pedidos'
@@ -209,10 +229,12 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/reset-password'
     | '/sitemap.xml'
+    | '/mesa/$numero'
     | '/pedido/$numero'
     | '/admin/caixa'
     | '/admin/catalogo'
     | '/admin/configuracoes'
+    | '/admin/kds'
     | '/admin/mesas'
     | '/admin/pdv'
     | '/admin/pedidos'
@@ -229,10 +251,12 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/sitemap.xml'
     | '/_authenticated/admin'
+    | '/mesa/$numero'
     | '/pedido/$numero'
     | '/_authenticated/admin/caixa'
     | '/_authenticated/admin/catalogo'
     | '/_authenticated/admin/configuracoes'
+    | '/_authenticated/admin/kds'
     | '/_authenticated/admin/mesas'
     | '/_authenticated/admin/pdv'
     | '/_authenticated/admin/pedidos'
@@ -249,6 +273,7 @@ export interface RootRouteChildren {
   CheckoutRoute: typeof CheckoutRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  MesaNumeroRoute: typeof MesaNumeroRoute
   PedidoNumeroRoute: typeof PedidoNumeroRoute
 }
 
@@ -310,6 +335,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PedidoNumeroRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mesa/$numero': {
+      id: '/mesa/$numero'
+      path: '/mesa/$numero'
+      fullPath: '/mesa/$numero'
+      preLoaderRoute: typeof MesaNumeroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/admin': {
       id: '/_authenticated/admin'
       path: '/admin'
@@ -359,6 +391,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminMesasRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/kds': {
+      id: '/_authenticated/admin/kds'
+      path: '/kds'
+      fullPath: '/admin/kds'
+      preLoaderRoute: typeof AuthenticatedAdminKdsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/configuracoes': {
       id: '/_authenticated/admin/configuracoes'
       path: '/configuracoes'
@@ -387,6 +426,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminCaixaRoute: typeof AuthenticatedAdminCaixaRoute
   AuthenticatedAdminCatalogoRoute: typeof AuthenticatedAdminCatalogoRoute
   AuthenticatedAdminConfiguracoesRoute: typeof AuthenticatedAdminConfiguracoesRoute
+  AuthenticatedAdminKdsRoute: typeof AuthenticatedAdminKdsRoute
   AuthenticatedAdminMesasRoute: typeof AuthenticatedAdminMesasRoute
   AuthenticatedAdminPdvRoute: typeof AuthenticatedAdminPdvRoute
   AuthenticatedAdminPedidosRoute: typeof AuthenticatedAdminPedidosRoute
@@ -399,6 +439,7 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminCaixaRoute: AuthenticatedAdminCaixaRoute,
   AuthenticatedAdminCatalogoRoute: AuthenticatedAdminCatalogoRoute,
   AuthenticatedAdminConfiguracoesRoute: AuthenticatedAdminConfiguracoesRoute,
+  AuthenticatedAdminKdsRoute: AuthenticatedAdminKdsRoute,
   AuthenticatedAdminMesasRoute: AuthenticatedAdminMesasRoute,
   AuthenticatedAdminPdvRoute: AuthenticatedAdminPdvRoute,
   AuthenticatedAdminPedidosRoute: AuthenticatedAdminPedidosRoute,
@@ -429,6 +470,7 @@ const rootRouteChildren: RootRouteChildren = {
   CheckoutRoute: CheckoutRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  MesaNumeroRoute: MesaNumeroRoute,
   PedidoNumeroRoute: PedidoNumeroRoute,
 }
 export const routeTree = rootRouteImport
