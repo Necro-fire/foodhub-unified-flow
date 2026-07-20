@@ -227,7 +227,10 @@ function OrderDetail({ order, onClose, onUpdate }: any) {
         <div className="no-print flex flex-wrap gap-2 pt-3">
           <Button variant="outline" size="sm" onClick={() => window.print()}><Printer className="h-4 w-4" />Imprimir</Button>
           <div className="flex-1" />
-          <Button size="sm" variant="outline" onClick={() => onUpdate("cancelado")}>Cancelar</Button>
+          <Button size="sm" variant="outline" onClick={() => {
+            const motivo = window.prompt("Motivo do cancelamento:");
+            if (motivo !== null) { onUpdate("cancelado", motivo || "Sem motivo informado"); onClose(); }
+          }}>Cancelar</Button>
           <Button size="sm" onClick={() => { onUpdate("entregue"); onClose(); }}>Marcar entregue</Button>
         </div>
       </DialogContent>
