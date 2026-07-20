@@ -10,7 +10,7 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "14.4"
+    PostgrestVersion: "14.5"
   }
   public: {
     Tables: {
@@ -19,39 +19,33 @@ export type Database = {
           created_at: string
           criado_por: string | null
           descricao: string | null
-          forma_pagamento: string | null
+          forma_pagamento: Database["public"]["Enums"]["payment_method"] | null
           id: string
           order_id: string | null
           session_id: string
-          tipo: string
-          updated_at: string
-          user_id: string
+          tipo: Database["public"]["Enums"]["cash_movement_type"]
           valor: number
         }
         Insert: {
           created_at?: string
           criado_por?: string | null
           descricao?: string | null
-          forma_pagamento?: string | null
+          forma_pagamento?: Database["public"]["Enums"]["payment_method"] | null
           id?: string
           order_id?: string | null
           session_id: string
-          tipo: string
-          updated_at?: string
-          user_id?: string
-          valor?: number
+          tipo: Database["public"]["Enums"]["cash_movement_type"]
+          valor: number
         }
         Update: {
           created_at?: string
           criado_por?: string | null
           descricao?: string | null
-          forma_pagamento?: string | null
+          forma_pagamento?: Database["public"]["Enums"]["payment_method"] | null
           id?: string
           order_id?: string | null
           session_id?: string
-          tipo?: string
-          updated_at?: string
-          user_id?: string
+          tipo?: Database["public"]["Enums"]["cash_movement_type"]
           valor?: number
         }
         Relationships: [
@@ -75,47 +69,38 @@ export type Database = {
         Row: {
           aberto_em: string
           aberto_por: string | null
-          created_at: string
           fechado_em: string | null
           fechado_por: string | null
           id: string
-          observacoes: string
+          observacoes: string | null
           saldo_esperado: number | null
           saldo_final: number | null
           saldo_inicial: number
-          status: string
-          updated_at: string
-          user_id: string
+          status: Database["public"]["Enums"]["cash_session_status"]
         }
         Insert: {
           aberto_em?: string
           aberto_por?: string | null
-          created_at?: string
           fechado_em?: string | null
           fechado_por?: string | null
           id?: string
-          observacoes?: string
+          observacoes?: string | null
           saldo_esperado?: number | null
           saldo_final?: number | null
           saldo_inicial?: number
-          status?: string
-          updated_at?: string
-          user_id?: string
+          status?: Database["public"]["Enums"]["cash_session_status"]
         }
         Update: {
           aberto_em?: string
           aberto_por?: string | null
-          created_at?: string
           fechado_em?: string | null
           fechado_por?: string | null
           id?: string
-          observacoes?: string
+          observacoes?: string | null
           saldo_esperado?: number | null
           saldo_final?: number | null
           saldo_inicial?: number
-          status?: string
-          updated_at?: string
-          user_id?: string
+          status?: Database["public"]["Enums"]["cash_session_status"]
         }
         Relationships: []
       }
@@ -123,7 +108,7 @@ export type Database = {
         Row: {
           ativo: boolean
           created_at: string
-          icone: string
+          icone: string | null
           id: string
           nome: string
           ordem: number
@@ -133,7 +118,7 @@ export type Database = {
         Insert: {
           ativo?: boolean
           created_at?: string
-          icone?: string
+          icone?: string | null
           id?: string
           nome: string
           ordem?: number
@@ -143,7 +128,7 @@ export type Database = {
         Update: {
           ativo?: boolean
           created_at?: string
-          icone?: string
+          icone?: string | null
           id?: string
           nome?: string
           ordem?: number
@@ -152,45 +137,36 @@ export type Database = {
         }
         Relationships: []
       }
-      company_settings: {
+      customers: {
         Row: {
           created_at: string
-          custo_fixo_mensal: number
-          email_empresa: string
-          endereco_empresa: string
+          email: string | null
+          endereco: string | null
           id: string
-          logo_url: string
-          margem_custo_percentual: number
-          nome_empresa: string
-          telefone_empresa: string
+          nome: string
+          observacoes: string | null
+          telefone: string | null
           updated_at: string
-          user_id: string
         }
         Insert: {
           created_at?: string
-          custo_fixo_mensal?: number
-          email_empresa?: string
-          endereco_empresa?: string
+          email?: string | null
+          endereco?: string | null
           id?: string
-          logo_url?: string
-          margem_custo_percentual?: number
-          nome_empresa?: string
-          telefone_empresa?: string
+          nome: string
+          observacoes?: string | null
+          telefone?: string | null
           updated_at?: string
-          user_id: string
         }
         Update: {
           created_at?: string
-          custo_fixo_mensal?: number
-          email_empresa?: string
-          endereco_empresa?: string
+          email?: string | null
+          endereco?: string | null
           id?: string
-          logo_url?: string
-          margem_custo_percentual?: number
-          nome_empresa?: string
-          telefone_empresa?: string
+          nome?: string
+          observacoes?: string | null
+          telefone?: string | null
           updated_at?: string
-          user_id?: string
         }
         Relationships: []
       }
@@ -198,35 +174,35 @@ export type Database = {
         Row: {
           created_at: string
           id: string
+          observacoes: string | null
           order_id: string
           preco_unitario: number
           product_id: string | null
           produto_nome: string
           quantidade: number
           subtotal: number
-          updated_at: string
         }
         Insert: {
           created_at?: string
           id?: string
+          observacoes?: string | null
           order_id: string
-          preco_unitario?: number
+          preco_unitario: number
           product_id?: string | null
           produto_nome: string
-          quantidade?: number
-          subtotal?: number
-          updated_at?: string
+          quantidade: number
+          subtotal: number
         }
         Update: {
           created_at?: string
           id?: string
+          observacoes?: string | null
           order_id?: string
           preco_unitario?: number
           product_id?: string | null
           produto_nome?: string
           quantidade?: number
           subtotal?: number
-          updated_at?: string
         }
         Relationships: [
           {
@@ -252,19 +228,21 @@ export type Database = {
           cliente_nome: string | null
           cliente_telefone: string | null
           created_at: string
+          customer_id: string | null
           desconto: number
           finalizado_em: string | null
-          forma_pagamento: string | null
+          forma_pagamento: Database["public"]["Enums"]["payment_method"]
           horario_retirada: string | null
           id: string
           mesa_id: string | null
           numero: number
           observacoes: string | null
-          origem: string
-          status: string
+          origem: Database["public"]["Enums"]["order_origin"]
+          pagamento_detalhes: Json | null
+          status: Database["public"]["Enums"]["order_status"]
           subtotal: number
           taxa_entrega: number
-          tipo: string
+          tipo: Database["public"]["Enums"]["order_type"]
           total: number
           updated_at: string
         }
@@ -274,19 +252,21 @@ export type Database = {
           cliente_nome?: string | null
           cliente_telefone?: string | null
           created_at?: string
+          customer_id?: string | null
           desconto?: number
           finalizado_em?: string | null
-          forma_pagamento?: string | null
+          forma_pagamento?: Database["public"]["Enums"]["payment_method"]
           horario_retirada?: string | null
           id?: string
           mesa_id?: string | null
           numero?: number
           observacoes?: string | null
-          origem?: string
-          status?: string
+          origem?: Database["public"]["Enums"]["order_origin"]
+          pagamento_detalhes?: Json | null
+          status?: Database["public"]["Enums"]["order_status"]
           subtotal?: number
           taxa_entrega?: number
-          tipo?: string
+          tipo?: Database["public"]["Enums"]["order_type"]
           total?: number
           updated_at?: string
         }
@@ -296,23 +276,32 @@ export type Database = {
           cliente_nome?: string | null
           cliente_telefone?: string | null
           created_at?: string
+          customer_id?: string | null
           desconto?: number
           finalizado_em?: string | null
-          forma_pagamento?: string | null
+          forma_pagamento?: Database["public"]["Enums"]["payment_method"]
           horario_retirada?: string | null
           id?: string
           mesa_id?: string | null
           numero?: number
           observacoes?: string | null
-          origem?: string
-          status?: string
+          origem?: Database["public"]["Enums"]["order_origin"]
+          pagamento_detalhes?: Json | null
+          status?: Database["public"]["Enums"]["order_status"]
           subtotal?: number
           taxa_entrega?: number
-          tipo?: string
+          tipo?: Database["public"]["Enums"]["order_type"]
           total?: number
           updated_at?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "orders_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "orders_mesa_id_fkey"
             columns: ["mesa_id"]
@@ -347,7 +336,7 @@ export type Database = {
           imagem_url?: string | null
           nome: string
           ordem?: number
-          preco?: number
+          preco: number
           preco_promo?: number | null
           updated_at?: string
         }
@@ -377,34 +366,25 @@ export type Database = {
       }
       profiles: {
         Row: {
-          avatar_url: string
-          cor_tema: string
           created_at: string
-          email: string
+          email: string | null
           id: string
-          nome: string
+          nome: string | null
           updated_at: string
-          user_id: string
         }
         Insert: {
-          avatar_url?: string
-          cor_tema?: string
           created_at?: string
-          email?: string
-          id?: string
-          nome?: string
+          email?: string | null
+          id: string
+          nome?: string | null
           updated_at?: string
-          user_id: string
         }
         Update: {
-          avatar_url?: string
-          cor_tema?: string
           created_at?: string
-          email?: string
+          email?: string | null
           id?: string
-          nome?: string
+          nome?: string | null
           updated_at?: string
-          user_id?: string
         }
         Relationships: []
       }
@@ -414,7 +394,8 @@ export type Database = {
           created_at: string
           id: string
           numero: number
-          status: string
+          observacao: string | null
+          status: Database["public"]["Enums"]["table_status"]
           updated_at: string
         }
         Insert: {
@@ -422,7 +403,8 @@ export type Database = {
           created_at?: string
           id?: string
           numero: number
-          status?: string
+          observacao?: string | null
+          status?: Database["public"]["Enums"]["table_status"]
           updated_at?: string
         }
         Update: {
@@ -430,113 +412,259 @@ export type Database = {
           created_at?: string
           id?: string
           numero?: number
-          status?: string
+          observacao?: string | null
+          status?: Database["public"]["Enums"]["table_status"]
           updated_at?: string
-        }
-        Relationships: []
-      }
-      service_orders: {
-        Row: {
-          aparelho: string
-          cliente: string
-          codigo: string
-          created_at: string
-          data_entrada: string
-          hora_final: string | null
-          hora_inicio: string | null
-          id: string
-          marca: string
-          modelo: string
-          observacoes: string
-          problema: string
-          status: string
-          tecnico: string
-          telefone: string
-          updated_at: string
-          user_id: string
-          valor: number
-        }
-        Insert: {
-          aparelho: string
-          cliente: string
-          codigo: string
-          created_at?: string
-          data_entrada?: string
-          hora_final?: string | null
-          hora_inicio?: string | null
-          id?: string
-          marca?: string
-          modelo?: string
-          observacoes?: string
-          problema?: string
-          status?: string
-          tecnico?: string
-          telefone?: string
-          updated_at?: string
-          user_id: string
-          valor?: number
-        }
-        Update: {
-          aparelho?: string
-          cliente?: string
-          codigo?: string
-          created_at?: string
-          data_entrada?: string
-          hora_final?: string | null
-          hora_inicio?: string | null
-          id?: string
-          marca?: string
-          modelo?: string
-          observacoes?: string
-          problema?: string
-          status?: string
-          tecnico?: string
-          telefone?: string
-          updated_at?: string
-          user_id?: string
-          valor?: number
         }
         Relationships: []
       }
       settings: {
         Row: {
           aceita_pedidos_online: boolean
-          created_at: string
+          banner_url: string | null
+          cor_primaria: string | null
           descricao: string | null
           endereco: string | null
           horario_funcionamento: string | null
           id: number
+          logo_url: string | null
           nome_estabelecimento: string
           taxa_entrega: number
           telefone: string | null
           updated_at: string
-          whatsapp_suporte: string
+          whatsapp_suporte: string | null
         }
         Insert: {
           aceita_pedidos_online?: boolean
-          created_at?: string
-          descricao?: string | null
-          endereco?: string | null
-          horario_funcionamento?: string | null
-          id: number
-          nome_estabelecimento?: string
-          taxa_entrega?: number
-          telefone?: string | null
-          updated_at?: string
-          whatsapp_suporte?: string
-        }
-        Update: {
-          aceita_pedidos_online?: boolean
-          created_at?: string
+          banner_url?: string | null
+          cor_primaria?: string | null
           descricao?: string | null
           endereco?: string | null
           horario_funcionamento?: string | null
           id?: number
+          logo_url?: string | null
           nome_estabelecimento?: string
           taxa_entrega?: number
           telefone?: string | null
           updated_at?: string
-          whatsapp_suporte?: string
+          whatsapp_suporte?: string | null
+        }
+        Update: {
+          aceita_pedidos_online?: boolean
+          banner_url?: string | null
+          cor_primaria?: string | null
+          descricao?: string | null
+          endereco?: string | null
+          horario_funcionamento?: string | null
+          id?: number
+          logo_url?: string | null
+          nome_estabelecimento?: string
+          taxa_entrega?: number
+          telefone?: string | null
+          updated_at?: string
+          whatsapp_suporte?: string | null
+        }
+        Relationships: []
+      }
+      support_categories: {
+        Row: {
+          ativo: boolean
+          created_at: string
+          icone: string | null
+          id: string
+          nome: string
+          ordem: number
+          slug: string
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          created_at?: string
+          icone?: string | null
+          id?: string
+          nome: string
+          ordem?: number
+          slug: string
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          created_at?: string
+          icone?: string | null
+          id?: string
+          nome?: string
+          ordem?: number
+          slug?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      support_problems: {
+        Row: {
+          ativo: boolean
+          category_id: string
+          causas: string[]
+          created_at: string
+          descricao: string | null
+          doc_url: string | null
+          id: string
+          imagem_url: string | null
+          observacoes: string | null
+          ordem: number
+          passos: string[]
+          titulo: string
+          updated_at: string
+          video_url: string | null
+        }
+        Insert: {
+          ativo?: boolean
+          category_id: string
+          causas?: string[]
+          created_at?: string
+          descricao?: string | null
+          doc_url?: string | null
+          id?: string
+          imagem_url?: string | null
+          observacoes?: string | null
+          ordem?: number
+          passos?: string[]
+          titulo: string
+          updated_at?: string
+          video_url?: string | null
+        }
+        Update: {
+          ativo?: boolean
+          category_id?: string
+          causas?: string[]
+          created_at?: string
+          descricao?: string | null
+          doc_url?: string | null
+          id?: string
+          imagem_url?: string | null
+          observacoes?: string | null
+          ordem?: number
+          passos?: string[]
+          titulo?: string
+          updated_at?: string
+          video_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "support_problems_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "support_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      support_ratings: {
+        Row: {
+          comentario: string | null
+          created_at: string
+          estrelas: number
+          ticket_id: string
+          user_id: string
+        }
+        Insert: {
+          comentario?: string | null
+          created_at?: string
+          estrelas: number
+          ticket_id: string
+          user_id: string
+        }
+        Update: {
+          comentario?: string | null
+          created_at?: string
+          estrelas?: number
+          ticket_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "support_ratings_ticket_id_fkey"
+            columns: ["ticket_id"]
+            isOneToOne: true
+            referencedRelation: "support_tickets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      support_tickets: {
+        Row: {
+          categoria_nome: string | null
+          category_id: string | null
+          created_at: string
+          descricao_adicional: string | null
+          encaminhado_whatsapp: boolean
+          id: string
+          problem_id: string | null
+          problema_titulo: string | null
+          resolvido: boolean | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          categoria_nome?: string | null
+          category_id?: string | null
+          created_at?: string
+          descricao_adicional?: string | null
+          encaminhado_whatsapp?: boolean
+          id?: string
+          problem_id?: string | null
+          problema_titulo?: string | null
+          resolvido?: boolean | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          categoria_nome?: string | null
+          category_id?: string | null
+          created_at?: string
+          descricao_adicional?: string | null
+          encaminhado_whatsapp?: boolean
+          id?: string
+          problem_id?: string | null
+          problema_titulo?: string | null
+          resolvido?: boolean | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "support_tickets_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "support_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "support_tickets_problem_id_fkey"
+            columns: ["problem_id"]
+            isOneToOne: false
+            referencedRelation: "support_problems"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
         }
         Relationships: []
       }
@@ -545,10 +673,39 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      get_next_os_code: { Args: { p_user_id: string }; Returns: string }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_staff: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "operador" | "caixa"
+      cash_movement_type: "entrada" | "saida" | "sangria" | "reforco" | "venda"
+      cash_session_status: "aberta" | "fechada"
+      order_origin: "pdv" | "mesa" | "online"
+      order_status:
+        | "novo"
+        | "confirmado"
+        | "em_preparo"
+        | "pronto"
+        | "saiu_entrega"
+        | "finalizado"
+        | "cancelado"
+        | "entregue"
+      order_type: "retirada" | "local" | "entrega"
+      payment_method:
+        | "pix"
+        | "dinheiro"
+        | "credito"
+        | "debito"
+        | "vale"
+        | "multiplo"
+        | "nao_definido"
+      table_status: "livre" | "ocupada" | "reservada"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -675,6 +832,32 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "operador", "caixa"],
+      cash_movement_type: ["entrada", "saida", "sangria", "reforco", "venda"],
+      cash_session_status: ["aberta", "fechada"],
+      order_origin: ["pdv", "mesa", "online"],
+      order_status: [
+        "novo",
+        "confirmado",
+        "em_preparo",
+        "pronto",
+        "saiu_entrega",
+        "finalizado",
+        "cancelado",
+        "entregue",
+      ],
+      order_type: ["retirada", "local", "entrega"],
+      payment_method: [
+        "pix",
+        "dinheiro",
+        "credito",
+        "debito",
+        "vale",
+        "multiplo",
+        "nao_definido",
+      ],
+      table_status: ["livre", "ocupada", "reservada"],
+    },
   },
 } as const
