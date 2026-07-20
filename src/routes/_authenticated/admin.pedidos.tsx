@@ -176,7 +176,7 @@ function PedidosPage() {
         </div>
       </div>
 
-      {detail && <OrderDetail order={detail} onClose={() => setDetail(null)} onUpdate={(s: string) => updateStatus.mutate({ id: detail.id, status: s })} />}
+      {detail && <OrderDetail order={detail} onClose={() => setDetail(null)} onUpdate={(s: string, motivo?: string) => updateStatus.mutate({ id: detail.id, status: s, motivo })} />}
     </div>
   );
 }
