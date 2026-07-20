@@ -199,8 +199,12 @@ function OrderDetail({ order, onClose, onUpdate }: any) {
           <div>Telefone: {order.cliente_telefone}</div>
           {order.tipo === "entrega" && (
             <>
-              {order.cliente_endereco && <div>Endereço: {order.cliente_endereco}</div>}
+              {order.cep && <div>CEP: {order.cep}</div>}
+              {(order.rua || order.numero_endereco) && <div>Endereço: {[order.rua, order.numero_endereco].filter(Boolean).join(", ")}</div>}
+              {order.complemento && <div>Complemento: {order.complemento}</div>}
               {order.bairro && <div>Bairro: {order.bairro}</div>}
+              {(order.cidade || order.estado) && <div>{[order.cidade, order.estado].filter(Boolean).join(" / ")}</div>}
+              {order.ponto_referencia && <div>Referência: {order.ponto_referencia}</div>}
             </>
           )}
           {order.tipo === "retirada" && order.horario_retirada && (
