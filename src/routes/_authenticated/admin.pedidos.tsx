@@ -59,9 +59,10 @@ function PedidosPage() {
   }, [qc]);
 
   const updateStatus = useMutation({
-    mutationFn: async ({ id, status }: { id: string; status: string }) => {
+    mutationFn: async ({ id, status, motivo }: { id: string; status: string; motivo?: string }) => {
       const patch: any = { status };
       if (status === "entregue" || status === "finalizado") patch.finalizado_em = new Date().toISOString();
+      if (status === "cancelado") { patch.cancelado_em = new Date().toISOString(); if (motivo) patch.motivo_cancelamento = motivo; }
       await supabase.from("orders").update(patch).eq("id", id);
     },
     onSuccess: () => qc.invalidateQueries(),
