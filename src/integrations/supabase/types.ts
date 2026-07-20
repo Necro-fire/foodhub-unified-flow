@@ -683,7 +683,17 @@ export type Database = {
       is_staff: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
-      app_role: "admin" | "operador" | "caixa"
+      app_role:
+        | "admin"
+        | "operador"
+        | "caixa"
+        | "proprietario"
+        | "gerente"
+        | "garcom"
+        | "cozinha"
+        | "producao"
+        | "estoque"
+        | "financeiro"
       cash_movement_type: "entrada" | "saida" | "sangria" | "reforco" | "venda"
       cash_session_status: "aberta" | "fechada"
       order_origin: "pdv" | "mesa" | "online"
@@ -833,7 +843,18 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["admin", "operador", "caixa"],
+      app_role: [
+        "admin",
+        "operador",
+        "caixa",
+        "proprietario",
+        "gerente",
+        "garcom",
+        "cozinha",
+        "producao",
+        "estoque",
+        "financeiro",
+      ],
       cash_movement_type: ["entrada", "saida", "sangria", "reforco", "venda"],
       cash_session_status: ["aberta", "fechada"],
       order_origin: ["pdv", "mesa", "online"],
