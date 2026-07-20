@@ -3,7 +3,7 @@ import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel,
   SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarHeader, SidebarFooter, useSidebar,
 } from "@/components/ui/sidebar";
-import { LayoutDashboard, ShoppingCart, Package, ClipboardList, Calculator, Coffee, Wallet, Settings, LogOut, Croissant, LifeBuoy, ChefHat } from "lucide-react";
+import { LayoutDashboard, ShoppingCart, Package, ClipboardList, Calculator, Coffee, Wallet, Settings, LogOut, Croissant, LifeBuoy, ChefHat, Users } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
 
@@ -16,6 +16,7 @@ const items = [
   { title: "Caixa", url: "/admin/caixa", icon: Wallet },
   { title: "Vendas", url: "/admin/vendas", icon: ShoppingCart },
   { title: "Catálogo", url: "/admin/catalogo", icon: Package },
+  { title: "Usuários", url: "/admin/usuarios", icon: Users },
   { title: "Suporte", url: "/admin/suporte", icon: LifeBuoy },
   { title: "Configurações", url: "/admin/configuracoes", icon: Settings },
 ];

@@ -59,9 +59,10 @@ function PedidosPage() {
   }, [qc]);
 
   const updateStatus = useMutation({
-    mutationFn: async ({ id, status }: { id: string; status: string }) => {
+    mutationFn: async ({ id, status, motivo }: { id: string; status: string; motivo?: string }) => {
       const patch: any = { status };
       if (status === "entregue" || status === "finalizado") patch.finalizado_em = new Date().toISOString();
+      if (status === "cancelado") { patch.cancelado_em = new Date().toISOString(); if (motivo) patch.motivo_cancelamento = motivo; }
       await supabase.from("orders").update(patch).eq("id", id);
     },
     onSuccess: () => qc.invalidateQueries(),
@@ -124,19 +125,19 @@ function PedidosPage() {
         </div>
       </div>
 
-      <div className="-mx-4 overflow-x-auto px-4 pb-2 md:mx-0 md:px-0">
-        <div className="grid min-w-[1100px] gap-3 md:min-w-0 md:grid-cols-3 xl:grid-cols-5" style={{ gridTemplateColumns: "repeat(5, minmax(220px, 1fr))" }}>
+      <div className="-mx-4 overflow-x-auto overflow-y-hidden px-4 pb-3 md:mx-0 md:px-0" style={{ scrollbarGutter: "stable" }}>
+        <div className="flex gap-3 md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {COLUMNS.map((col) => {
             const Icon = col.icon;
             const items = byStatus(col.key);
             return (
-              <div key={col.key} className="flex flex-col gap-2">
+              <div key={col.key} className="flex w-[280px] shrink-0 flex-col gap-2 md:w-auto">
                 <div className="flex items-center justify-between px-1">
-                  <h3 className="flex items-center gap-1.5 text-sm font-semibold">
-                    {Icon && <Icon className="h-4 w-4 text-chart-4" />}
-                    {col.label}
+                  <h3 className="flex items-center gap-1.5 truncate text-sm font-semibold">
+                    {Icon && <Icon className="h-4 w-4 shrink-0 text-chart-4" />}
+                    <span className="truncate">{col.label}</span>
                   </h3>
-                  <Badge variant="secondary">{items.length}</Badge>
+                  <Badge variant="secondary" className="shrink-0">{items.length}</Badge>
                 </div>
                 <div className={`flex min-h-[200px] flex-col gap-2 rounded-lg p-2 ${col.tone ?? "bg-muted/40"}`}>
                   {items.map((o) => {
@@ -156,8 +157,8 @@ function PedidosPage() {
                         </div>
                         <div className="mt-1 truncate text-xs">{o.cliente_nome ?? "Sem cliente"}</div>
                         <div className="mt-1 flex items-center gap-1.5 text-xs">
-                          <span className={`h-2 w-2 rounded-full ${tipoDot[o.tipo] ?? "bg-muted"}`} />
-                          <span className="font-medium">{tipoLabel[o.tipo]}</span>
+                          <span className={`h-2 w-2 shrink-0 rounded-full ${tipoDot[o.tipo] ?? "bg-muted"}`} />
+                          <span className="truncate font-medium">{tipoLabel[o.tipo]}</span>
                         </div>
                         {next && (
                           <Button size="sm" className="mt-2 w-full" onClick={(e) => { e.stopPropagation(); updateStatus.mutate({ id: o.id, status: next.status }); }}>
@@ -175,7 +176,7 @@ function PedidosPage() {
         </div>
       </div>
 
-      {detail && <OrderDetail order={detail} onClose={() => setDetail(null)} onUpdate={(s: string) => updateStatus.mutate({ id: detail.id, status: s })} />}
+      {detail && <OrderDetail order={detail} onClose={() => setDetail(null)} onUpdate={(s: string, motivo?: string) => updateStatus.mutate({ id: detail.id, status: s, motivo })} />}
     </div>
   );
 }
@@ -198,8 +199,12 @@ function OrderDetail({ order, onClose, onUpdate }: any) {
           <div>Telefone: {order.cliente_telefone}</div>
           {order.tipo === "entrega" && (
             <>
-              {order.cliente_endereco && <div>Endereço: {order.cliente_endereco}</div>}
+              {order.cep && <div>CEP: {order.cep}</div>}
+              {(order.rua || order.numero_endereco) && <div>Endereço: {[order.rua, order.numero_endereco].filter(Boolean).join(", ")}</div>}
+              {order.complemento && <div>Complemento: {order.complemento}</div>}
               {order.bairro && <div>Bairro: {order.bairro}</div>}
+              {(order.cidade || order.estado) && <div>{[order.cidade, order.estado].filter(Boolean).join(" / ")}</div>}
+              {order.ponto_referencia && <div>Referência: {order.ponto_referencia}</div>}
             </>
           )}
           {order.tipo === "retirada" && order.horario_retirada && (
@@ -222,7 +227,10 @@ function OrderDetail({ order, onClose, onUpdate }: any) {
         <div className="no-print flex flex-wrap gap-2 pt-3">
           <Button variant="outline" size="sm" onClick={() => window.print()}><Printer className="h-4 w-4" />Imprimir</Button>
           <div className="flex-1" />
-          <Button size="sm" variant="outline" onClick={() => onUpdate("cancelado")}>Cancelar</Button>
+          <Button size="sm" variant="outline" onClick={() => {
+            const motivo = window.prompt("Motivo do cancelamento:");
+            if (motivo !== null) { onUpdate("cancelado", motivo || "Sem motivo informado"); onClose(); }
+          }}>Cancelar</Button>
           <Button size="sm" onClick={() => { onUpdate("entregue"); onClose(); }}>Marcar entregue</Button>
         </div>
       </DialogContent>
