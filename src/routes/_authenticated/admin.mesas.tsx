@@ -123,7 +123,7 @@ function MesasPage() {
           })}
         </div>
       ) : (
-        <MapaView tables={tables.data ?? []} orderByMesa={orderByMesa} onOpen={(m) => setSelected({ mesa: m, order: orderByMesa[m.id] })} onQr={setQrMesa} onReserva={setReserva} />
+        <MapaView tables={tables.data ?? []} orderByMesa={orderByMesa} onOpen={(m: any) => setSelected({ mesa: m, order: orderByMesa[m.id] })} onQr={setQrMesa} onReserva={setReserva} />
       )}
 
       {qrMesa && <QrDialog mesa={qrMesa} onClose={() => setQrMesa(null)} />}
