@@ -224,21 +224,32 @@ export type Database = {
       orders: {
         Row: {
           bairro: string | null
+          cancelado_em: string | null
+          cep: string | null
+          cidade: string | null
           cliente_endereco: string | null
           cliente_nome: string | null
           cliente_telefone: string | null
+          complemento: string | null
           created_at: string
           customer_id: string | null
           desconto: number
+          estado: string | null
           finalizado_em: string | null
           forma_pagamento: Database["public"]["Enums"]["payment_method"]
+          garcom_id: string | null
           horario_retirada: string | null
           id: string
           mesa_id: string | null
+          motivo_cancelamento: string | null
           numero: number
+          numero_endereco: string | null
           observacoes: string | null
           origem: Database["public"]["Enums"]["order_origin"]
           pagamento_detalhes: Json | null
+          pagamentos: Json | null
+          ponto_referencia: string | null
+          rua: string | null
           status: Database["public"]["Enums"]["order_status"]
           subtotal: number
           taxa_entrega: number
@@ -248,21 +259,32 @@ export type Database = {
         }
         Insert: {
           bairro?: string | null
+          cancelado_em?: string | null
+          cep?: string | null
+          cidade?: string | null
           cliente_endereco?: string | null
           cliente_nome?: string | null
           cliente_telefone?: string | null
+          complemento?: string | null
           created_at?: string
           customer_id?: string | null
           desconto?: number
+          estado?: string | null
           finalizado_em?: string | null
           forma_pagamento?: Database["public"]["Enums"]["payment_method"]
+          garcom_id?: string | null
           horario_retirada?: string | null
           id?: string
           mesa_id?: string | null
+          motivo_cancelamento?: string | null
           numero?: number
+          numero_endereco?: string | null
           observacoes?: string | null
           origem?: Database["public"]["Enums"]["order_origin"]
           pagamento_detalhes?: Json | null
+          pagamentos?: Json | null
+          ponto_referencia?: string | null
+          rua?: string | null
           status?: Database["public"]["Enums"]["order_status"]
           subtotal?: number
           taxa_entrega?: number
@@ -272,21 +294,32 @@ export type Database = {
         }
         Update: {
           bairro?: string | null
+          cancelado_em?: string | null
+          cep?: string | null
+          cidade?: string | null
           cliente_endereco?: string | null
           cliente_nome?: string | null
           cliente_telefone?: string | null
+          complemento?: string | null
           created_at?: string
           customer_id?: string | null
           desconto?: number
+          estado?: string | null
           finalizado_em?: string | null
           forma_pagamento?: Database["public"]["Enums"]["payment_method"]
+          garcom_id?: string | null
           horario_retirada?: string | null
           id?: string
           mesa_id?: string | null
+          motivo_cancelamento?: string | null
           numero?: number
+          numero_endereco?: string | null
           observacoes?: string | null
           origem?: Database["public"]["Enums"]["order_origin"]
           pagamento_detalhes?: Json | null
+          pagamentos?: Json | null
+          ponto_referencia?: string | null
+          rua?: string | null
           status?: Database["public"]["Enums"]["order_status"]
           subtotal?: number
           taxa_entrega?: number
@@ -392,28 +425,90 @@ export type Database = {
         Row: {
           capacidade: number
           created_at: string
+          garcom_id: string | null
           id: string
+          mesa_pai_id: string | null
           numero: number
           observacao: string | null
+          ocupada_em: string | null
+          pos_x: number
+          pos_y: number
+          reserva_horario: string | null
+          reserva_nome: string | null
+          reserva_telefone: string | null
           status: Database["public"]["Enums"]["table_status"]
           updated_at: string
         }
         Insert: {
           capacidade?: number
           created_at?: string
+          garcom_id?: string | null
           id?: string
+          mesa_pai_id?: string | null
           numero: number
           observacao?: string | null
+          ocupada_em?: string | null
+          pos_x?: number
+          pos_y?: number
+          reserva_horario?: string | null
+          reserva_nome?: string | null
+          reserva_telefone?: string | null
           status?: Database["public"]["Enums"]["table_status"]
           updated_at?: string
         }
         Update: {
           capacidade?: number
           created_at?: string
+          garcom_id?: string | null
           id?: string
+          mesa_pai_id?: string | null
           numero?: number
           observacao?: string | null
+          ocupada_em?: string | null
+          pos_x?: number
+          pos_y?: number
+          reserva_horario?: string | null
+          reserva_nome?: string | null
+          reserva_telefone?: string | null
           status?: Database["public"]["Enums"]["table_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "restaurant_tables_mesa_pai_id_fkey"
+            columns: ["mesa_pai_id"]
+            isOneToOne: false
+            referencedRelation: "restaurant_tables"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      role_permissions: {
+        Row: {
+          can_edit: boolean
+          can_view: boolean
+          created_at: string
+          id: string
+          module: string
+          role: Database["public"]["Enums"]["app_role"]
+          updated_at: string
+        }
+        Insert: {
+          can_edit?: boolean
+          can_view?: boolean
+          created_at?: string
+          id?: string
+          module: string
+          role: Database["public"]["Enums"]["app_role"]
+          updated_at?: string
+        }
+        Update: {
+          can_edit?: boolean
+          can_view?: boolean
+          created_at?: string
+          id?: string
+          module?: string
+          role?: Database["public"]["Enums"]["app_role"]
           updated_at?: string
         }
         Relationships: []
@@ -643,6 +738,41 @@ export type Database = {
             columns: ["problem_id"]
             isOneToOne: false
             referencedRelation: "support_problems"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      table_history: {
+        Row: {
+          action: string
+          created_at: string
+          details: Json | null
+          id: string
+          mesa_id: string
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          details?: Json | null
+          id?: string
+          mesa_id: string
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          details?: Json | null
+          id?: string
+          mesa_id?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "table_history_mesa_id_fkey"
+            columns: ["mesa_id"]
+            isOneToOne: false
+            referencedRelation: "restaurant_tables"
             referencedColumns: ["id"]
           },
         ]
