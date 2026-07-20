@@ -3,7 +3,7 @@ import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel,
   SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarHeader, SidebarFooter, useSidebar,
 } from "@/components/ui/sidebar";
-import { LayoutDashboard, ShoppingCart, Package, ClipboardList, Calculator, Coffee, Wallet, Settings, LogOut, Croissant, LifeBuoy, ChefHat } from "lucide-react";
+import { LayoutDashboard, ShoppingCart, Package, ClipboardList, Calculator, Coffee, Wallet, Settings, LogOut, Croissant, LifeBuoy, ChefHat, Users } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
 
